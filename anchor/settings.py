@@ -52,7 +52,7 @@ MY_APPS = [
     "users",
     "events",
     "batchs",
-    "adresses",
+    "addresses",
     "tickets",
     "zones",
 ]
