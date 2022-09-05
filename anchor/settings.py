@@ -46,6 +46,9 @@ THIRD_PARTY_APPS = [
 MY_APPS = [
     'users',
     'events',
+    'batchs',
+    'addresses',
+    'tickets',
     'zones',
 ]
 
