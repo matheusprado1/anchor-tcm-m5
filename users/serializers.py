@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             "username",
             "email",
             "cpf",
+            "birthdate",
             "password",
             "first_name",
             "last_name",
@@ -48,7 +49,8 @@ class UserSerializer(serializers.ModelSerializer):
                 ]
             },
             "password": {"write_only": True},
-            "is_admin": {"required": True},
+            "is_staff": {"required": True},
+            "birthdate": {"required": False},
         }
 
     read_only_fields = [
