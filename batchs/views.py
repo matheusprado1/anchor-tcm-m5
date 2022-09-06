@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from batchs.models import Batch
+from batchs.serializers import BatchDetailSerializer, BatchSerializer
+
+
+class BatchsView(generics.ListCreateAPIView):
+    queryset = Batch.objects.all()
+    serializer_class = BatchSerializer
+
+class UpdateBatchsView(generics.UpdateAPIView):
+    queryset = Batch.objects.all()
+    serializer_class = BatchDetailSerializer
