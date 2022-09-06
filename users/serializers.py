@@ -50,7 +50,6 @@ class UserSerializer(serializers.ModelSerializer):
             },
             "password": {"write_only": True},
             "is_staff": {"required": True},
-            "birthdate": {"required": False},
         }
 
     read_only_fields = [
@@ -76,6 +75,12 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ListUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "first_name", "last_name", "cpf", "email"]
+
+
 class LoginSerializer(serializers.Serializer):
-    email = serializers.CharField(write_only=True)
+    email = serializers.EmailField(write_only=True)
     password = serializers.CharField(write_only=True)
