@@ -1,3 +1,16 @@
+import uuid
 from django.db import models
 
-# Create your models here.
+class Event(models.Model):
+  id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+  # photo = models.ImageField()
+  name = models.CharField(max_length=127)
+  description = models.CharField(max_length=10)
+  duration = models.IntegerField()
+  date = models.DateTimeField()
+  full_age = models.IntegerField()
+  created_at = models.DateTimeField(auto_now_add=True)
+  is_active = models.BooleanField(default=True)
+
+  # user_id = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="events")
+  # adress_id = models.ForeignKey("adress.Adress", on_delete=models.CASCADE, related_name="events")
