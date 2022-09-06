@@ -10,3 +10,6 @@ from addresses.serializers import AddressSerializer
 class AddressesView(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
