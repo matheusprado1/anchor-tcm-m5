@@ -13,7 +13,7 @@ class User(AbstractUser):
     )
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=127, unique=True)
-    cpf = models.CharField(max_length=14, unique=True, null=True)
+    cpf = models.CharField(max_length=14, unique=True, null=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)
@@ -21,9 +21,9 @@ class User(AbstractUser):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name", "last_name"]
     objects = MyUserManager()
-
-    REQUIRED_FIELDS = ["email", "first_name", "last_name"]
 
     def save(self, *args, **kwargs):
         self.username = self.username.lower()

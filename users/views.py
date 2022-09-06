@@ -1,17 +1,19 @@
 from django.contrib.auth import authenticate
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, Response, status
-
+from .mixins import SerializerByMethodMixin
 from .models import User
-from .serializers import LoginSerializer, UserSerializer
+from .serializers import LoginSerializer, UserSerializer, ListUserSerializer
 
 
-class UserView(generics.ListCreateAPIView):
+class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
-    queryset = User.objects.all().order_by("-username")
-    serializer_class = UserSerializer
+    queryset = User.objects.all().order_by("username")
+    serializer_map = {
+        "GET": ListUserSerializer,
+        "POST": UserSerializer
+    }
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
