@@ -13,6 +13,6 @@ class Batch(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
 
-    zone = models.ForeignKey(
-        "zones.Zone", on_delete=models.CASCADE, related_name="batchs"
-    )
+    # zone = models.ForeignKey(
+    #     "zones.Zone", on_delete=models.CASCADE, related_name="batchs"
+    # )
