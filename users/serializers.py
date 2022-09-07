@@ -1,3 +1,5 @@
+from addresses.models import Address
+from addresses.serializers import AddressSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -5,6 +7,8 @@ from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
+
     class Meta:
         model = User
         fields = [
@@ -21,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_superuser",
             "created_at",
             "updated_at",
+            "address",
         ]
 
         extra_kwargs = {
@@ -60,8 +65,12 @@ class UserSerializer(serializers.ModelSerializer):
     ]
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
+        validated_address, _ = Address.objects.get_or_create(
+            **validated_data.pop("address")
+        )
+        return User.objects.create_user(
+            **validated_data, address=validated_address
+        )
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
@@ -73,6 +82,19 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class UpdateUserAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "is_active",
+            "last_name",
+            "email",
+        ]
 
 
 class ListUserSerializer(serializers.ModelSerializer):

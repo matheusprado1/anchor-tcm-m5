@@ -10,7 +10,7 @@ class BatchSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = [
             "created_at",
-            "zone",
+            # "zone",
         ]
 
 
@@ -30,6 +30,6 @@ class BatchDetailSerializer(serializers.ModelSerializer):
         ]
 
         read_only_fields = [
-            "zone_id",
+            # "zone_id",
             "created_at",
         ]

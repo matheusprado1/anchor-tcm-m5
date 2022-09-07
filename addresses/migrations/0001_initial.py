@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Zone",
+            name="Address",
             fields=[
                 (
                     "id",
@@ -23,10 +23,11 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ("name", models.CharField(max_length=50)),
-                ("total_selled_tickets", models.IntegerField()),
-                ("is_active", models.BooleanField(default=False)),
-                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("city", models.CharField(max_length=50)),
+                ("district", models.CharField(max_length=100)),
+                ("street", models.CharField(max_length=255)),
+                ("number", models.CharField(max_length=30)),
+                ("zipcode", models.CharField(max_length=20)),
             ],
         ),
     ]

@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Zone",
+            name="Event",
             fields=[
                 (
                     "id",
@@ -23,10 +23,13 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ("name", models.CharField(max_length=50)),
-                ("total_selled_tickets", models.IntegerField()),
-                ("is_active", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=127)),
+                ("description", models.CharField(max_length=10)),
+                ("duration", models.IntegerField()),
+                ("date", models.DateTimeField()),
+                ("full_age", models.IntegerField()),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("is_active", models.BooleanField(default=True)),
             ],
         ),
     ]
