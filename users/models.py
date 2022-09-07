@@ -21,6 +21,10 @@ class User(AbstractUser):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    address = models.ForeignKey(
+        "addresses.Address", on_delete=models.DO_NOTHING, related_name="users"
+    )
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
     objects = MyUserManager()
