@@ -1,19 +1,29 @@
 from django.contrib.auth import authenticate
+from django_filters import rest_framework as filters
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, Response, status
+
 from .mixins import SerializerByMethodMixin
 from .models import User
-from .serializers import LoginSerializer, UserSerializer, ListUserSerializer
+from .serializers import ListUserSerializer, LoginSerializer, UserSerializer
+
+
+class UserFilter(filters.FilterSet):
+    name = filters.CharFilter("first_name", "icontains")
+
+    class Meta:
+        model = User
+        fields = []
 
 
 class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
-    queryset = User.objects.all().order_by("username")
-    serializer_map = {
-        "GET": ListUserSerializer,
-        "POST": UserSerializer
-    }
+    queryset = User.objects.all()
+    serializer_map = {"GET": ListUserSerializer, "POST": UserSerializer}
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = UserFilter
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
