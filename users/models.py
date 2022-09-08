@@ -26,6 +26,7 @@ class User(AbstractUser):
         on_delete=models.DO_NOTHING,
         related_name="users",
         default="",
+        null=True,
     )
 
     USERNAME_FIELD = "email"

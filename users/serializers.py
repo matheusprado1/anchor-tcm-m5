@@ -70,12 +70,14 @@ class UserSerializer(serializers.ModelSerializer):
             **validated_data, address=validated_address
         )
 
-    def update(self, instance: User, validated_data):
+    def update(
+        self, instance: User, validated_data
+    ):  # modificar depois para atualizar o endereço e não criar outro.
         if validated_data.get("address"):
-            address_poped = validated_data.pop("address")
+            address_dict = validated_data.pop("address")
 
             verificated_address, _ = Address.objects.get_or_create(
-                **address_poped
+                **address_dict
             )
             instance.address = verificated_address
 
