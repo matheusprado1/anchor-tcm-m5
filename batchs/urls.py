@@ -1,8 +1,8 @@
 from django.urls import path
 
-from . import views
+from .views import BatchsView, UpdateBatchsView
 
 urlpatterns = [
-    path("batch/", views.BatchsView.as_view()),
-    path("batch/<uuid:pk>/", views.UpdateBatchsView.as_view()),
+    path("batch/", BatchsView.as_view()),
+    path("batch/<uuid:pk>/", UpdateBatchsView.as_view()),
 ]
