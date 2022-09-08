@@ -5,6 +5,7 @@ from django.db import models
 
 class Ticket(models.Model):
     id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="tickets"
     )
