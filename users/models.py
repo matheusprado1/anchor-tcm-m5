@@ -23,14 +23,14 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     address = models.ForeignKey(
         Address,
-        on_delete=models.CASCADE,
-        related_name="user",
+        on_delete=models.DO_NOTHING,
+        related_name="users",
         null=True,
         blank=True,
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    REQUIRED_FIELDS = ["first_name", "last_name", "username", "birthdate"]
     objects = MyUserManager()
 
     def save(self, *args, **kwargs):
