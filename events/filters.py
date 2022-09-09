@@ -8,9 +8,9 @@ from events.serializers import EventDistanceSerializer
 
 
 class DistanceFilter(filters.FilterSet):
-    dist_gte = filters.NumberFilter(field_name="distance", lookup_expr="gte")
-    dist_lte = filters.NumberFilter(field_name="distance", lookup_expr="lte")
+    dist_gte = filters.NumberFilter(field_name="duration", lookup_expr="gte")
+    dist_lte = filters.NumberFilter(field_name="duration", lookup_expr="lte")
 
     class Meta:
         model = Event
-        fields = "__all__"
+        fields = []

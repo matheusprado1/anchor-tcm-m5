@@ -8,7 +8,8 @@ class Event(models.Model):
     # photo = models.ImageField()
     name = models.CharField(max_length=127)
     description = models.CharField(max_length=10)
-    duration = models.IntegerField()
+    duration = models.IntegerField() # analisar posteriormente
+    # distance = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     date = models.DateTimeField()
     full_age = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,7 +19,9 @@ class Event(models.Model):
     #     "users.User", on_delete=models.CASCADE, related_name="events"
     # )
     address = models.ForeignKey(
-        "addresses.Address", on_delete=models.CASCADE, related_name="events",
-        null=True, 
-        blank=True
+        "addresses.Address",
+        on_delete=models.CASCADE,
+        related_name="events",
+        null=True,
+        blank=True,
     )
