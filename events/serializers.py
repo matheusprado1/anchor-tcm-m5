@@ -2,23 +2,27 @@ from geopy import distance
 from geopy.geocoders import Nominatim
 from rest_framework import serializers
 
+from addresses.serializers import AddressSerializer
+
 from .models import Event
 
 
 class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = [
-            "photo, name, description, duration, date, full_age, created_at,"
-            " is_active"
-        ]
 
+  # address = AddressSerializer()
+
+  class Meta:
+    model = Event
+    fields = "__all__"
+    read_only_fields = ["created_at", "user", "address"]
 
 class EventDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = "__all__"
+  class Meta:
+    model = Event
+    fields = ["name", "description", "duration", "date", "full_age", "is_active"]
+    read_only_fields = ["created_at", "user_id", "address_id"]
 
+  # address = AddressSerializer(read_only=True)
 
 class EventDistanceSerializer(serializers.ModelSerializer):
     distance = serializers.SerializerMethodField()
