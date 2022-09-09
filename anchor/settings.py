@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 import dotenv
+import django_on_heroku
 
 dotenv.load_dotenv()
 
@@ -183,3 +184,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+django_on_heroku.settings(locals())
