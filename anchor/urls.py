@@ -24,5 +24,5 @@ urlpatterns = [
     path('api/', include('zones.urls')),
     path("api/", include("batchs.urls")),
     path("api/", include("addresses.urls")),
-
+    path("api/", include("tickets.urls"),)
 ]
