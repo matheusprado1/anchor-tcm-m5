@@ -1,18 +1,26 @@
+from django_filters import rest_framework as filters
 from rest_framework import generics
 
-from .models import Event
-from .serializers import EventSerializer, EventDetailSerializer
-from .mixins import SerializerByMethodMixin
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
+
+from events.filters import DistanceFilter
+
+from .mixins import SerializerByMethod
+from .models import Event
+from .serializers import (
+    EventDetailSerializer,
+    EventDistanceSerializer,
+    EventSerializer,
+)
 
 
-class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
-
-  queryset = Event.objects.all()
-  serializer_map = {"GET": EventSerializer, "POST": EventDetailSerializer}
+class EventView(SerializerByMethod, generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    queryset = Event.objects.all()
+    serializer_map = {"GET": EventSerializer, "POST": EventDetailSerializer}
 
   def perform_create(self, serializer):
     serializer.save(address=self.request.user)
@@ -21,6 +29,16 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticatedOrReadOnly]
-
+  
   queryset = Event.objects.all()
-  serializer_class = EventSerializer
+  serializer_class = EventDetailSerializer
+
+
+class EventDistanceView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]  # ajustar aqui
+    
+    queryset = Event.objects.all()
+    serializer_class = EventDistanceSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = DistanceFilter
