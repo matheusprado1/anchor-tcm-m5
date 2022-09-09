@@ -1,10 +1,7 @@
-from django_filters import rest_framework as filters
 from rest_framework import generics
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-
-from events.filters import DistanceFilter
 
 from .mixins import SerializerByMethodMixin
 from addresses.models import Address
@@ -46,5 +43,3 @@ class EventDistanceView(generics.ListAPIView):
 
     queryset = Event.objects.all()
     serializer_class = EventDistanceSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = DistanceFilter

@@ -172,6 +172,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # GOOGLE_CLOUD_STORAGE_URL = 'http://storage.googleapis.com/bucket' #whatever the ulr for accessing your cloud storgage bucket
 # GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = 'public, max-age: 7200' # default cache control headers for your files
 
+MEDIA_URL = "/api/media/"
+
+# Define a raiz dos saves de qualquer arquivo
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',

@@ -13,7 +13,7 @@ def validate_file_size(file):
 
 class Event(models.Model):
   id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-  photo = models.ImageField(validators=[validate_file_size])
+  photo = models.ImageField(validators=[validate_file_size], null=True, blank=True)
   name = models.CharField(max_length=127)
   description = models.TextField()
   duration = models.IntegerField()
