@@ -17,9 +17,7 @@ class EventSerializer(serializers.ModelSerializer):
 class EventDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        # rever aqui pois adicionei o distance
         fields = "__all__"
-        read_only_fields = ["distance"]
 
 
 class EventDistanceSerializer(serializers.ModelSerializer):
@@ -30,9 +28,6 @@ class EventDistanceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_distance(self, obj):
-        # import ipdb
-
-        # ipdb.set_trace()
         geolocator = Nominatim(user_agent="address")
         user_address = self.context["request"].user.address.get_full_address()
         event_address = obj.address.get_full_address()
@@ -46,4 +41,3 @@ class EventDistanceSerializer(serializers.ModelSerializer):
             ).km
         except AttributeError:
             return "User or event invalid address for"
-        # return 5
