@@ -1,15 +1,33 @@
+from django_filters import rest_framework as filters
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from .models import Event
-from .serializers import EventDetailSerializer, EventSerializer
-from .mixins import SerializerByMethod
+from rest_framework.permissions import IsAuthenticated
 
-class EventView(SerializerByMethod,generics.ListCreateAPIView):
-  queryset = Event.objects.all()
-  serializer_map = {"GET": EventSerializer, "POST": EventDetailSerializer}
+from events.filters import DistanceFilter
+
+from .mixins import SerializerByMethod
+from .models import Event
+from .serializers import (
+    EventDetailSerializer,
+    EventDistanceSerializer,
+    EventSerializer,
+)
+
+
+class EventView(SerializerByMethod, generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_map = {"GET": EventSerializer, "POST": EventDetailSerializer}
 
 
 class EventDetailView(generics.RetrieveUpdateAPIView):
-  queryset = Event.objects.all()
-  serializer_class = EventDetailSerializer
+    queryset = Event.objects.all()
+    serializer_class = EventDetailSerializer
+
+
+class EventDistanceView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]  # ajustar aqui
+    queryset = Event.objects.all()
+    serializer_class = EventDistanceSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = DistanceFilter
