@@ -29,6 +29,14 @@ class User(AbstractUser):
         blank=True,
     )
 
+    address = models.ForeignKey(
+        "addresses.Address",
+        on_delete=models.DO_NOTHING,
+        related_name="users",
+        default="",
+        null=True,
+    )
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "username", "birthdate"]
     objects = MyUserManager()
