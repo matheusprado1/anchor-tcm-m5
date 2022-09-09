@@ -7,9 +7,16 @@ from django.utils import timezone
 from users.utils import MyUserManager
 
 
+def upload_image_user(instance, filename):
+    return f"{instance.id_user}-{filename}"
+
+
 class User(AbstractUser):
     id = models.UUIDField(
         default=uuid.uuid4, unique=True, primary_key=True, editable=False
+    )
+    photo = models.ImageField(
+        null=True, blank=True, upload_to=upload_image_user
     )
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=127, unique=True)

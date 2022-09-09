@@ -1,7 +1,4 @@
 from rest_framework import permissions
-from rest_framework.views import Request, View
-
-from .models import User
 
 
 class IsUserAdmin(permissions.BasePermission):

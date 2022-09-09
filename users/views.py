@@ -42,7 +42,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class LoginView(APIView):
     def post(self, request):
-        
+
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = authenticate(

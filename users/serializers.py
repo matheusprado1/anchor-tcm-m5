@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
+            "photo",
             "email",
             "cpf",
             "birthdate",
@@ -116,6 +117,7 @@ class ListUserSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
+            "photo",
             "is_staff",
             "is_active",
             "first_name",
