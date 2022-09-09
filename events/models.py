@@ -7,7 +7,7 @@ class Event(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     # photo = models.ImageField()
     name = models.CharField(max_length=127)
-    description = models.CharField(max_length=10)
+    description = models.CharField(max_length=250)
     duration = models.IntegerField()
     date = models.DateTimeField()
     full_age = models.IntegerField()
