@@ -166,11 +166,9 @@ AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DJANGO GOOGLE CONFIGURATION
+MEDIA_URL = "/api/media/"
 
-# GOOGLE_CLOUD_STORAGE_BUCKET = '/your_bucket_name' # the name of the bucket you have created from the google cloud storage console
-# GOOGLE_CLOUD_STORAGE_URL = 'http://storage.googleapis.com/bucket' #whatever the ulr for accessing your cloud storgage bucket
-# GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = 'public, max-age: 7200' # default cache control headers for your files
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (

@@ -8,9 +8,6 @@ from .models import Event
 
 
 class EventSerializer(serializers.ModelSerializer):
-
-  # address = AddressSerializer()
-
   class Meta:
     model = Event
     fields = "__all__"
@@ -22,7 +19,6 @@ class EventDetailSerializer(serializers.ModelSerializer):
     fields = ["name", "description", "duration", "date", "full_age", "is_active"]
     read_only_fields = ["created_at", "user_id", "address_id"]
 
-  # address = AddressSerializer(read_only=True)
 
 class EventDistanceSerializer(serializers.ModelSerializer):
     distance = serializers.SerializerMethodField()
