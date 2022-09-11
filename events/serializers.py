@@ -1,6 +1,7 @@
 from geopy import distance
 from geopy.geocoders import Nominatim
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from addresses.serializers import AddressSerializer
 
@@ -16,14 +17,20 @@ class EventSerializer(serializers.ModelSerializer):
     fields = ["id", "name", "description", "duration", "date", "full_age","created_at", "is_active", "address"]
     read_only_fields = ["created_at"]
 
-  def create(self, validated_data):
-    validated_address, _ = Address.objects.get_or_create(
-      **validated_data.pop("address")
-    )
+    extra_kwargs = {
+    "name": {
+      "validators": [UniqueValidator(queryset=Event.objects.all(),
+        message="This username already exists")]}
+    }
 
-    return Event.objects.create(
-      **validated_data, address=validated_address
-    )
+    def create(self, validated_data):
+      validated_address, _ = Address.objects.get_or_create(
+        **validated_data.pop("address")
+      )
+
+      return Event.objects.create(
+        **validated_data, address=validated_address
+      )
 
 class EventDetailSerializer(serializers.ModelSerializer):
   class Meta:

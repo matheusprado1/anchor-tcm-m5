@@ -16,12 +16,6 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
   lookup_url_kwarg = "event_id"
 
-  # def perform_create(self, serializer):
-  #   address = self.request.data["address"]
-
-    # address = Address.objects.get(id = id_address)
-    # serializer.save(address=address)
-
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
   authentication_classes = [TokenAuthentication]
