@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 import dotenv
 import django_on_heroku
 
@@ -51,6 +55,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
+    "cloudinary"
 ]
 
 MY_APPS = [
@@ -115,6 +120,10 @@ else:
             "HOST": "db",
             "PORT": 5432,
         }
+    #     "default": {
+    #       "ENGINE": "django.db.backends.sqlite3",
+    #       "NAME": BASE_DIR / "db.sqlite3",
+    # }
     }
 
 
@@ -182,5 +191,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+cloudinary.config(
+  cloud_name = "anchorteam",
+  api_key = "468776243755473",
+  api_secret = "CMu43VSuh0uA1KU5VQXYQfXALSk",
+  secure = True
+)
 
 django_on_heroku.settings(locals())

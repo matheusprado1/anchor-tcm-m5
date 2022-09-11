@@ -5,18 +5,30 @@ from rest_framework import serializers
 from addresses.serializers import AddressSerializer
 
 from .models import Event
+from addresses.models import Address
 
 
 class EventSerializer(serializers.ModelSerializer):
+  address = AddressSerializer()
+
   class Meta:
     model = Event
-    fields = "__all__"
-    read_only_fields = ["created_at", "user", "address"]
+    fields = ["id", "name", "description", "duration", "date", "full_age","created_at", "is_active", "address"]
+    read_only_fields = ["created_at"]
+
+  def create(self, validated_data):
+    validated_address, _ = Address.objects.get_or_create(
+      **validated_data.pop("address")
+    )
+
+    return Event.objects.create(
+      **validated_data, address=validated_address
+    )
 
 class EventDetailSerializer(serializers.ModelSerializer):
   class Meta:
     model = Event
-    fields = ["name", "description", "duration", "date", "full_age", "is_active"]
+    fields = "__all__"
     read_only_fields = ["created_at", "user_id", "address_id"]
 
 

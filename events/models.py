@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
 
 
 MB = 1
@@ -13,7 +14,7 @@ def validate_file_size(file):
 
 class Event(models.Model):
   id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-  photo = models.ImageField(validators=[validate_file_size])
+  # photo = CloudinaryField(validators=[validate_file_size])
   name = models.CharField(max_length=127)
   description = models.TextField()
   duration = models.IntegerField()
@@ -22,5 +23,5 @@ class Event(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField(default=True)
 
-  # user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="events", default="")
-  address = models.OneToOneField("addresses.Address", on_delete=models.DO_NOTHING, related_name="event", default="", null=True)
+  user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="events", default="", null=True)
+  address = models.ForeignKey("addresses.Address", on_delete=models.DO_NOTHING, related_name="event", default="", null=True)
