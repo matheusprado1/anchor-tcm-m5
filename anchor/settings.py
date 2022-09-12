@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 import dotenv
 import django_on_heroku
 
@@ -51,6 +55,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
+    "cloudinary"
 ]
 
 MY_APPS = [
@@ -115,6 +120,10 @@ else:
             "HOST": "db",
             "PORT": 5432,
         }
+    #     "default": {
+    #       "ENGINE": "django.db.backends.sqlite3",
+    #       "NAME": BASE_DIR / "db.sqlite3",
+    # }
     }
 
 
@@ -166,11 +175,9 @@ AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DJANGO GOOGLE CONFIGURATION
+MEDIA_URL = "/api/media/"
 
-# GOOGLE_CLOUD_STORAGE_BUCKET = '/your_bucket_name' # the name of the bucket you have created from the google cloud storage console
-# GOOGLE_CLOUD_STORAGE_URL = 'http://storage.googleapis.com/bucket' #whatever the ulr for accessing your cloud storgage bucket
-# GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = 'public, max-age: 7200' # default cache control headers for your files
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
@@ -184,5 +191,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+cloudinary.config(
+  cloud_name = "anchorteam",
+  api_key = "468776243755473",
+  api_secret = "CMu43VSuh0uA1KU5VQXYQfXALSk",
+  secure = True
+)
 
 django_on_heroku.settings(locals())
