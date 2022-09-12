@@ -2,7 +2,7 @@ name: anchor_CI
 
 on:
   push:
-    branches: ["master"]
+    branches: [*]
 
 jobs:
   build:
