@@ -5,23 +5,23 @@ from rest_framework.views import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 
-class TicketViewTest(APITestCase):
+class TestTicketView(APITestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
 
-        cls.common_user = baker.make("users.User")
-        cls.superuser = baker.make("users.User", is_superuser=True)
+        cls.commonUser = baker.make("users.User")
+        cls.superUser = baker.make("users.User", is_superuser=True)
 
-        cls.commonUser_token = Token.objects.create(user=cls.common_user).key
-        cls.superuser_token = Token.objects.create(user=cls.superuser).key
+        cls.commonUser_token = Token.objects.create(user=cls.commonUser).key
+        cls.superUser_token = Token.objects.create(user=cls.superUser).key
         cls.INVALID_token = "10351033"
 
         cls.batch_1 = baker.make("batchs.Batch", quantity=100)
         cls.batch_2 = baker.make("batchs.Batch", quantity=100)
 
         cls.ticket_data_1 = { "batch_id": str(cls.batch_1.batch_id) }
-        # cls.ticket_data_1 = { "batch_id": str(cls.batch_2.batch_id) }
+
         cls.INVALID_ticket_data = { "batch_id": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
         cls.INVALID_type_for_ticket_data = { "batch_id": "1" }
 
@@ -35,7 +35,7 @@ class TicketViewTest(APITestCase):
 
         expected_response = {
             "id": response.data["id"], 
-            "user_id": self.common_user.id, 
+            "user_id": self.commonUser.id, 
             "batch_id": self.ticket_data_1["batch_id"], 
             "created_at": response.data["created_at"]
         }
@@ -120,7 +120,7 @@ class TicketViewTest(APITestCase):
 
     def test_list_tickets(self):
 
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superuser_token}")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superUser_token}")
         response = self.client.get("/api/tickets/")
 
         results = [
@@ -143,7 +143,7 @@ class TicketViewTest(APITestCase):
 
     def test_paginate_in_list_tickets(self):
 
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superuser_token}")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superUser_token}")
         response = self.client.get("/api/tickets/?page=2")
 
         results = [
