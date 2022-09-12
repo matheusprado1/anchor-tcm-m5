@@ -3,7 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from batchs.models import Batch
 from batchs.serializers import BatchDetailSerializer, BatchSerializer
-from batchs.permissions import OwnerOrSuperUserAuth, SuperUserAuth
+from batchs.permissions import OwnerOrSuperUserAuth
 
 class BatchsView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
