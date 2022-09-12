@@ -13,6 +13,3 @@ class SuperUserAuth(permissions.BasePermission):
         )
 
 
-class OwnerOrSuperUserAuth(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj: Batch):
-        return obj.user == request.user.event_id
