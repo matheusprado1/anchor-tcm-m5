@@ -1,15 +1,14 @@
 from rest_framework import generics
 from .models import Event
 from addresses.models import Address
-from .serializers import EventSerializer, EventDetailSerializer, EventDistanceSerializer
+from .serializers import EventSerializer, EventDistanceSerializer
 from .mixins import SerializerByMethodMixin
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView, Request, Response, status
 from .mixins import SerializerByMethodMixin
 from .models import Event
-from .serializers import (EventDetailSerializer, EventDistanceSerializer,
-                          EventSerializer)
+
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
   authentication_classes = [TokenAuthentication]
@@ -27,7 +26,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticatedOrReadOnly]
 
   queryset = Event.objects.all()
-  serializer_class = EventDetailSerializer
+  serializer_class = EventSerializer
 
   lookup_url_kwarg = "event_id"
 
