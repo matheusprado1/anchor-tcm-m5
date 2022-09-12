@@ -1,4 +1,6 @@
 from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from batchs.models import Batch
 
 from tickets.permissions import IsSuperuser, IsUser, IsOwner, IsSuperuserOrAuthenticatedToCreate, IsUser
 from tickets.models import Ticket
@@ -10,6 +12,11 @@ class TicketView(generics.ListCreateAPIView):
 
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
+
+    def perform_create(self, serializer):
+        
+        get_object_or_404(Batch, pk=serializer.validated_data["batch_id"])
+        serializer.save()
 
 
 class TicketRetrieveView(generics.RetrieveAPIView):
