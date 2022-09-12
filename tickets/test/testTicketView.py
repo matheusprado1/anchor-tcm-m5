@@ -69,9 +69,7 @@ class TestTicketView(APITestCase):
 
         response = self.client.post(self.path, self.ticket_data_1)
 
-        expected_response = {
-            "detail": "Authentication credentials were not provided."
-        }
+        expected_response = { "detail": "Authentication credentials were not provided." }
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data, expected_response)
@@ -81,9 +79,7 @@ class TestTicketView(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.INVALID_token}")
         response = self.client.post(self.path, self.ticket_data_1)
 
-        expected_response = {
-            "detail": "Invalid token."
-        }
+        expected_response = { "detail": "Invalid token." }
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data, expected_response)
@@ -134,10 +130,10 @@ class TestTicketView(APITestCase):
         
         expected_response = OrderedDict([
             ("count", len(self.ticket_list)), 
-            ("next", "http://testserver/api/tickets/?page=2"), 
+            ("next", f"http://testserver{self.path}?page=2"), 
             ("previous", None), 
             ("results", results)
-            ])
+        ])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
@@ -158,9 +154,9 @@ class TestTicketView(APITestCase):
         expected_response = OrderedDict([
             ("count", len(self.ticket_list)), 
             ("next", None), 
-            ("previous", "http://testserver/api/tickets/"), 
+            ("previous", f"http://testserver{self.path}"), 
             ("results", results)
-            ])
+        ])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
