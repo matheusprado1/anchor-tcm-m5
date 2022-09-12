@@ -10,19 +10,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("events", "0001_initial"),
+        ("tickets", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="event",
+            model_name="ticket",
             name="user",
             field=models.ForeignKey(
-                default="",
-                null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name="events",
+                related_name="tickets",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),

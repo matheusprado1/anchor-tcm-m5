@@ -24,37 +24,37 @@ class EventSerializer(serializers.ModelSerializer):
                                                message="This username already exists")]}
         }
 
-  def create(self, validated_data):
-    validated_address, _ = Address.objects.get_or_create(
-      **validated_data.pop("address")
-    )
+    def create(self, validated_data):
+        validated_address, _ = Address.objects.get_or_create(
+            **validated_data.pop("address")
+        )
 
-    return Event.objects.create(
-      **validated_data, address=validated_address
-    )
+        return Event.objects.create(
+            **validated_data, address=validated_address
+        )
 
-  def update(
-    self, instance: Event, validated_data):
-    if validated_data.get("address"):
-      address_dict = validated_data.pop("address")
+    def update(
+            self, instance: Event, validated_data):
+        if validated_data.get("address"):
+            address_dict = validated_data.pop("address")
 
-      verificated_address, _ = Address.objects.get_or_create(
-        **address_dict)
+            verificated_address, _ = Address.objects.get_or_create(
+                **address_dict)
 
-      instance.address = verificated_address
+            instance.address = verificated_address
 
-    for key, value in validated_data.items():
-      setattr(instance, key, value)
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
 
-    instance.save()
-    return instance
+        instance.save()
+        return instance
+
 
 class EventDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = "__all__"
         read_only_fields = ["created_at", "user_id", "address_id"]
-
 
 
 class EventDistanceSerializer(serializers.ModelSerializer):
