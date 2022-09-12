@@ -1,4 +1,6 @@
+from addresses.models import Address
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
@@ -29,6 +31,10 @@ class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = UserFilter
 
+    def perform_create(self, serializer):
+        address = get_object_or_404(Address, self.request.data["address"])
+        return serializer.save(address=address)
+
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
@@ -38,6 +44,11 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
 
 
 class LoginView(APIView):

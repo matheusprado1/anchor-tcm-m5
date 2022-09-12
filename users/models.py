@@ -1,5 +1,6 @@
 import uuid
 
+from addresses.models import Address
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
@@ -25,8 +26,15 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)
     birthdate = models.DateField()
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    address = models.ForeignKey(
+        Address,
+        on_delete=models.DO_NOTHING,
+        related_name="users",
+        null=True,
+        blank=True,
+    )
 
     address = models.ForeignKey(
         "addresses.Address",

@@ -57,11 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_staff": {"required": True},
         }
 
-    read_only_fields = [
-        "is_superuser",
-        "created_at",
-        "is_active",
-    ]
+    read_only_fields = ["is_superuser", "created_at", "is_active"]
 
     def create(self, validated_data):
         validated_address, _ = Address.objects.get_or_create(
@@ -71,14 +67,12 @@ class UserSerializer(serializers.ModelSerializer):
             **validated_data, address=validated_address
         )
 
-    def update(
-        self, instance: User, validated_data
-    ):  # modificar depois para atualizar o endereço e não criar outro.
+    def update(self, instance, validated_data):
         if validated_data.get("address"):
-            address_dict = validated_data.pop("address")
+            address_poped = validated_data.pop("address")
 
             verificated_address, _ = Address.objects.get_or_create(
-                **address_dict
+                **address_poped
             )
             instance.address = verificated_address
 
@@ -87,28 +81,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
-
-class UpdateUserAdmin(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "username",
-            "first_name",
-            "is_active",
-            "last_name",
-            "email",
-            "created_at",
-            "updated_at",
-            "password",
-        ]
-
-    read_only_fields = [
-        "created_at",
-        "updated_at",
-        "is_active",
-    ]
 
 
 class ListUserSerializer(serializers.ModelSerializer):
