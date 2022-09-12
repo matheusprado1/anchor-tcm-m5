@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             model_name="user",
             name="photo",
             field=models.ImageField(
-                blank=True, null=True, upload_to=users.models.upload_image_user
+                blank=True, null=True
             ),
         ),
     ]

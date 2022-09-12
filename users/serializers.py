@@ -3,7 +3,7 @@ from addresses.serializers import AddressSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import User
+from users.models import Image, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,7 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
-            "photo",
             "email",
             "cpf",
             "birthdate",
@@ -89,7 +88,6 @@ class ListUserSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
-            "photo",
             "is_staff",
             "is_active",
             "first_name",
@@ -102,3 +100,9 @@ class ListUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(write_only=True)
     password = serializers.CharField(write_only=True)
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ["id", "title", "photo", "user_id"]
