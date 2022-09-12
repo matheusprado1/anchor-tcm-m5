@@ -27,11 +27,12 @@ class TestTicketView(APITestCase):
 
         cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.batch_id) for i in range(6)]
 
+        cls.path = "/api/tickets/"
     
     def test_create_ticket(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.post("/api/tickets/", self.ticket_data_1)
+        response = self.client.post(self.path, self.ticket_data_1)
 
         expected_response = {
             "id": response.data["id"], 
@@ -51,7 +52,7 @@ class TestTicketView(APITestCase):
             user_token = Token.objects.create(user=user).key
 
             self.client.credentials(HTTP_AUTHORIZATION=f"Token {user_token}")
-            response = self.client.post("/api/tickets/", self.ticket_data_1)
+            response = self.client.post(self.path, self.ticket_data_1)
 
             expected_response = {
                 "id": response.data["id"], 
@@ -66,7 +67,7 @@ class TestTicketView(APITestCase):
 
     def test_create_ticket_WITHOUT_token(self):
 
-        response = self.client.post("/api/tickets/", self.ticket_data_1)
+        response = self.client.post(self.path, self.ticket_data_1)
 
         expected_response = {
             "detail": "Authentication credentials were not provided."
@@ -78,7 +79,7 @@ class TestTicketView(APITestCase):
     def test_create_ticket_with_INVALID_token(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.INVALID_token}")
-        response = self.client.post("/api/tickets/", self.ticket_data_1)
+        response = self.client.post(self.path, self.ticket_data_1)
 
         expected_response = {
             "detail": "Invalid token."
@@ -90,7 +91,7 @@ class TestTicketView(APITestCase):
     def test_create_ticket_for_UNEXISTING_batch(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.post("/api/tickets/", self.INVALID_ticket_data)
+        response = self.client.post(self.path, self.INVALID_ticket_data)
 
         expected_response = { "detail": "Not found." }
 
@@ -100,7 +101,7 @@ class TestTicketView(APITestCase):
     def test_create_ticket_with_EMPTY_body(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.post("/api/tickets/", {})
+        response = self.client.post(self.path, {})
 
         expected_response = { "batch_id": ["This field is required."] }
 
@@ -110,7 +111,7 @@ class TestTicketView(APITestCase):
     def test_create_ticket_with_INVALID_batchId_type(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.post("/api/tickets/", self.INVALID_type_for_ticket_data)
+        response = self.client.post(self.path, self.INVALID_type_for_ticket_data)
 
         expected_response = { "batch_id": ["Must be a valid UUID."] }
 
@@ -121,7 +122,7 @@ class TestTicketView(APITestCase):
     def test_list_tickets(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superUser_token}")
-        response = self.client.get("/api/tickets/")
+        response = self.client.get(self.path)
 
         results = [
             OrderedDict([ 
@@ -167,7 +168,7 @@ class TestTicketView(APITestCase):
     def test_list_tickets_with_INVALID_permissions(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.get("/api/tickets/")
+        response = self.client.get(self.path)
 
         expected_response = { "detail": "You do not have permission to perform this action." }
 
