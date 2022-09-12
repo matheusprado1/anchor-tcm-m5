@@ -23,4 +23,4 @@ class ZoneDetailView(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = ZoneSerializer
   queryset = Zone.objects.all()
 
-    lookup_url_kwarg = "zone_id"
+  lookup_url_kwarg = "zone_id"
