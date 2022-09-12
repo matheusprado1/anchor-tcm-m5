@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn kenzie_pet.wsgi
+web: gunicorn anchor.wsgi
