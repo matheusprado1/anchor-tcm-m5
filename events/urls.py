@@ -17,3 +17,4 @@ urlpatterns = [
     path("event/distance_lte/<int:dist>/", EventDistanceLteView.as_view()),
     path("event/distance_gte/<int:dist>/", EventDistanceGteView.as_view()),
 ]
+
