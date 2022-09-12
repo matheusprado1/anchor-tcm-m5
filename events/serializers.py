@@ -33,7 +33,7 @@ class EventSerializer(serializers.ModelSerializer):
     )
 
   def update(
-    self, instance: Event, validated_data):  # modificar depois para atualizar o endereço e não criar outro.
+    self, instance: Event, validated_data):
     if validated_data.get("address"):
       address_dict = validated_data.pop("address")
 
