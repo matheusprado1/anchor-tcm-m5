@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "django_filters",
     "cloudinary",
+    'drf_spectacular',
 ]
 
 MY_APPS = [
@@ -198,9 +199,18 @@ REST_FRAMEWORK = {
         "rest_framework.pagination.PageNumberPagination"
     ),
     "PAGE_SIZE": 4,
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ANCHOR API',
+    'DESCRIPTION': 'Api for event management',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 cloudinary.config(
@@ -208,6 +218,7 @@ cloudinary.config(
     api_key="468776243755473",
     api_secret="CMu43VSuh0uA1KU5VQXYQfXALSk",
     secure=True,
+
 )
 
 django_on_heroku.settings(locals())

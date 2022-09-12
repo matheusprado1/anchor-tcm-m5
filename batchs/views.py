@@ -1,18 +1,22 @@
 from rest_framework import generics
-from batchs.mixins import SerializerByMixin
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from batchs.models import Batch
 from batchs.serializers import BatchDetailSerializer, BatchSerializer
+from batchs.permissions import SuperUserAuth
 
-
-class BatchsView(SerializerByMixin, generics.ListCreateAPIView):
+class BatchsView(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
-    serializer_map = {"GET": BatchSerializer,
-                      "POST": BatchSerializer}
+    serializer_class = BatchSerializer
+    lookup_field = "batch_id"
 
 
-
-class UpdateBatchsView(SerializerByMixin, generics.UpdateAPIView):
+class UpdateBatchsView(generics.RetrieveUpdateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
-    serializer_map = {"PATCH": BatchDetailSerializer}
-
+    serializer_class = BatchDetailSerializer
+    lookup_field = "batch_id"
