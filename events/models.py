@@ -23,5 +23,7 @@ class Event(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField(default=True)
 
+
   user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="events", default="", null=True)
   address = models.ForeignKey("addresses.Address", on_delete=models.DO_NOTHING, related_name="event", default="", null=True)
+

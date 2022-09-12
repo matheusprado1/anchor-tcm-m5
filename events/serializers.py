@@ -49,8 +49,8 @@ class EventDistanceSerializer(serializers.ModelSerializer):
     def get_distance(self, obj):
         geolocator = Nominatim(user_agent="address")
         user_address = self.context["request"].user.address.get_full_address()
-        user_location = geolocator.geocode(user_address)
         event_address = obj.address.get_full_address()
+        user_location = geolocator.geocode(user_address)
         event_location = geolocator.geocode(event_address)
 
         try:
