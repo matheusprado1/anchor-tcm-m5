@@ -6,14 +6,12 @@ from .mixins import SerializerByMethodMixin
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView, Request, Response, status
-from .mixins import SerializerByMethodMixin
 from .models import Event
 
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticatedOrReadOnly]
-
 
   serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
   queryset = Event.objects.all()
