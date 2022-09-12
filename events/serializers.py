@@ -37,21 +37,21 @@ class EventSerializer(serializers.ModelSerializer):
             }
         }
 
-        def create(self, validated_data):
-            validated_address, _ = Address.objects.get_or_create(
-                **validated_data.pop("address")
-            )
+    def create(self, validated_data):
+        validated_address, _ = Address.objects.get_or_create(
+            **validated_data.pop("address")
+        )
 
-            return Event.objects.create(
-                **validated_data, address=validated_address
-            )
+        return Event.objects.create(
+            **validated_data, address=validated_address
+        )
 
 
 class EventDetailSerializer(serializers.ModelSerializer):
-      class Meta:
-            model = Event
-            fields = "__all__"
-            read_only_fields = ["created_at", "user_id", "address_id"]
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ["created_at", "user_id", "address_id"]
 
 
 class EventDistanceSerializer(serializers.ModelSerializer):
