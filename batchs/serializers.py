@@ -22,8 +22,8 @@ class BatchSerializer(serializers.ModelSerializer):
         read_only_fields = [
             "created_at",
             "id",
+            "number_batch",
         ]
-
 
     def get_number_batch(self, obj):
         return
