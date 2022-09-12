@@ -5,7 +5,7 @@ import uuid
 
 
 class Batch(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    batch_id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     price = models.FloatField()
     quantity = models.IntegerField()
     due_date = models.DateField()
