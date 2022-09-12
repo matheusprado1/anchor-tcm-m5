@@ -3,7 +3,6 @@ import uuid
 from addresses.models import Address
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils import timezone
 
 from users.utils import MyUserManager
 
@@ -17,9 +16,9 @@ class User(AbstractUser):
     cpf = models.CharField(max_length=14, unique=True, null=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField()
     birthdate = models.DateField()
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     address = models.ForeignKey(
         Address,
@@ -29,14 +28,6 @@ class User(AbstractUser):
         blank=True,
     )
 
-    address = models.ForeignKey(
-        "addresses.Address",
-        on_delete=models.DO_NOTHING,
-        related_name="users",
-        default="",
-        null=True,
-    )
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "username", "birthdate"]
     objects = MyUserManager()
@@ -44,3 +35,17 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
         return super(User, self).save(*args, **kwargs)
+
+
+class Image(models.Model):
+    id = models.UUIDField(
+        default=uuid.uuid4, unique=True, primary_key=True, editable=False
+    )
+    title = models.CharField(max_length=50)
+    photo = models.ImageField(null=True, blank=True)
+    user = models.OneToOneField(
+        "users.User",
+        on_delete=models.DO_NOTHING,
+        default="",
+        null=True,
+    )
