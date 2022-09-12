@@ -10,6 +10,7 @@ class BatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Batch
         fields = [
+            "batch_id",
             "number_batch",
             "price",
             "quantity",
@@ -20,6 +21,8 @@ class BatchSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             "created_at",
+            "id",
+            "number_batch",
         ]
 
     def get_number_batch(self, obj):
@@ -33,6 +36,7 @@ class BatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Batch
         fields = [
+            "batch_id",
             "number_batch",
             "price",
             "quantity",
