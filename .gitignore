@@ -4,6 +4,5 @@ db.sqlite3
 .env
 commands.txt
 uploads
-docker-compose.yml
 htmlcov
 .coverage
