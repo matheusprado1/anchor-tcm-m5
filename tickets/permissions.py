@@ -8,8 +8,6 @@ class IsSuperuser(BasePermission):
 
 class IsUser(BasePermission):
     def has_permission(self, request: Request, view: View)-> bool:
-        import ipdb
-        ipdb.set_trace()
         return str(request.user.id) == view.kwargs["user_id"]
 
 class IsOwner(BasePermission):
