@@ -10,18 +10,19 @@ from addresses.models import Address
 
 
 class EventSerializer(serializers.ModelSerializer):
-  address = AddressSerializer()
+    address = AddressSerializer()
 
-  class Meta:
-    model = Event
-    fields = ["id", "name", "description", "duration", "date", "full_age","created_at", "is_active", "address"]
-    read_only_fields = ["created_at"]
+    class Meta:
+        model = Event
+        fields = ["id", "name", "description", "duration", "date",
+                  "full_age", "created_at", "is_active", "address"]
+        read_only_fields = ["created_at"]
 
-    extra_kwargs = {
-    "name": {
-      "validators": [UniqueValidator(queryset=Event.objects.all(),
-        message="This username already exists")]}
-    }
+        extra_kwargs = {
+            "name": {
+                "validators": [UniqueValidator(queryset=Event.objects.all(),
+                                               message="This username already exists")]}
+        }
 
   def create(self, validated_data):
     validated_address, _ = Address.objects.get_or_create(
@@ -47,6 +48,13 @@ class EventSerializer(serializers.ModelSerializer):
 
     instance.save()
     return instance
+
+class EventDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ["created_at", "user_id", "address_id"]
+
 
 
 class EventDistanceSerializer(serializers.ModelSerializer):

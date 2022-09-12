@@ -55,7 +55,8 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
-    "cloudinary"
+    "cloudinary",
+    'drf_spectacular',
 ]
 
 MY_APPS = [
@@ -120,10 +121,10 @@ else:
             "HOST": "db",
             "PORT": 5432,
         }
-    #     "default": {
-    #       "ENGINE": "django.db.backends.sqlite3",
-    #       "NAME": BASE_DIR / "db.sqlite3",
-    # }
+        #     "default": {
+        #       "ENGINE": "django.db.backends.sqlite3",
+        #       "NAME": BASE_DIR / "db.sqlite3",
+        # }
     }
 
 
@@ -189,14 +190,23 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 4,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ANCHOR API',
+    'DESCRIPTION': 'Api for event management',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 cloudinary.config(
-  cloud_name = "anchorteam",
-  api_key = "468776243755473",
-  api_secret = "CMu43VSuh0uA1KU5VQXYQfXALSk",
-  secure = True
+    cloud_name="anchorteam",
+    api_key="468776243755473",
+    api_secret="CMu43VSuh0uA1KU5VQXYQfXALSk",
+    secure=True
 )
 
 django_on_heroku.settings(locals())
