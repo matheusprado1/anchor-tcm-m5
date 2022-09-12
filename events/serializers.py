@@ -48,10 +48,10 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class EventDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = "__all__"
-        read_only_fields = ["created_at", "user_id", "address_id"]
+      class Meta:
+            model = Event
+            fields = "__all__"
+            read_only_fields = ["created_at", "user_id", "address_id"]
 
 
 class EventDistanceSerializer(serializers.ModelSerializer):

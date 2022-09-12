@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from addresses.models import Address
-from addresses.permissions import OwnerOrSuperUserAuth, SuperUserAuth
+from addresses.permissions import SuperUserAuth
 from addresses.serializers import AddressSerializer
 
 
