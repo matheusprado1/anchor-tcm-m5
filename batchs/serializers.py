@@ -24,14 +24,6 @@ class BatchSerializer(serializers.ModelSerializer):
             "id",
         ]
 
-    def create(self, validated_data):
-        validated_zone, _ = Batch.objects.get_or_create(
-            **validated_data.pop("zone")
-        )
-
-        return Batch.objects.create(
-            **validated_data, zone=validated_zone
-        )
 
     def get_number_batch(self, obj):
         return
