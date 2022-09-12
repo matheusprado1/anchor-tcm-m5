@@ -1,0 +1,1424 @@
+openapi: 3.0.3
+info:
+  title: ANCHOR API
+  version: 1.0.0
+  description: Api for event management
+paths:
+  /api/addresses/:
+    get:
+      operationId: addresses_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - addresses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAddressList'
+          description: ''
+    post:
+      operationId: addresses_create
+      tags:
+      - addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+  /api/addresses/{address_id}/:
+    get:
+      operationId: addresses_retrieve
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - addresses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    put:
+      operationId: addresses_update
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    patch:
+      operationId: addresses_partial_update
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    delete:
+      operationId: addresses_destroy
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - addresses
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/batch/:
+    get:
+      operationId: batch_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - batch
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBatchList'
+          description: ''
+    post:
+      operationId: batch_create
+      tags:
+      - batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+  /api/batch/{id}/:
+    put:
+      operationId: batch_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - batch
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+    patch:
+      operationId: batch_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBatchDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBatchDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBatchDetail'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchDetail'
+          description: ''
+  /api/event/:
+    get:
+      operationId: event_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventList'
+          description: ''
+    post:
+      operationId: event_create
+      tags:
+      - event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Event'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+          description: ''
+  /api/event/{event_id}/:
+    get:
+      operationId: event_retrieve
+      parameters:
+      - in: path
+        name: event_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDetail'
+          description: ''
+    put:
+      operationId: event_update
+      parameters:
+      - in: path
+        name: event_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EventDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EventDetail'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDetail'
+          description: ''
+    patch:
+      operationId: event_partial_update
+      parameters:
+      - in: path
+        name: event_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEventDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEventDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEventDetail'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDetail'
+          description: ''
+    delete:
+      operationId: event_destroy
+      parameters:
+      - in: path
+        name: event_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/event/distance/:
+    get:
+      operationId: event_distance_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventDistanceList'
+          description: ''
+  /api/event/distance_gte/{dist}/:
+    get:
+      operationId: event_distance_gte_list
+      parameters:
+      - in: path
+        name: dist
+        schema:
+          type: integer
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventDistanceList'
+          description: ''
+  /api/event/distance_lte/{dist}/:
+    get:
+      operationId: event_distance_lte_list
+      parameters:
+      - in: path
+        name: dist
+        schema:
+          type: integer
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - event
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventDistanceList'
+          description: ''
+  /api/login/:
+    post:
+      operationId: login_create
+      tags:
+      - login
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/tickets/:
+    get:
+      operationId: tickets_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - tickets
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTicketList'
+          description: ''
+    post:
+      operationId: tickets_create
+      tags:
+      - tickets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: ''
+  /api/tickets/{user_id}/:
+    get:
+      operationId: tickets_retrieve
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this ticket.
+        required: true
+      tags:
+      - tickets
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: ''
+  /api/tickets/<ticket_id/:
+    delete:
+      operationId: tickets_<ticket_id_destroy
+      tags:
+      - tickets
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/:
+    get:
+      operationId: users_list
+      parameters:
+      - in: query
+        name: is_staff
+        schema:
+          type: boolean
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedListUserList'
+          description: ''
+    post:
+      operationId: users_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/{user_id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/zones/:
+    get:
+      operationId: zones_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - zones
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedZoneList'
+          description: ''
+    post:
+      operationId: zones_create
+      tags:
+      - zones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Zone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Zone'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+          description: ''
+  /api/zones/{zone_id}/:
+    delete:
+      operationId: zones_destroy
+      parameters:
+      - in: path
+        name: zone_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - zones
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        city:
+          type: string
+          maxLength: 50
+        district:
+          type: string
+          maxLength: 100
+        street:
+          type: string
+          maxLength: 255
+        number:
+          type: string
+          maxLength: 30
+        zipcode:
+          type: string
+          maxLength: 20
+      required:
+      - city
+      - district
+      - id
+      - number
+      - street
+      - zipcode
+    Batch:
+      type: object
+      properties:
+        number_batch:
+          type: string
+          readOnly: true
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        due_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        zone:
+          type: string
+          format: uuid
+      required:
+      - created_at
+      - due_date
+      - number_batch
+      - price
+      - quantity
+      - zone
+    BatchDetail:
+      type: object
+      properties:
+        number_batch:
+          type: string
+          readOnly: true
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        due_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        zone:
+          type: string
+          format: uuid
+      required:
+      - created_at
+      - due_date
+      - number_batch
+      - price
+      - quantity
+      - zone
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        description:
+          type: string
+        duration:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        date:
+          type: string
+          format: date-time
+        full_age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+      - address
+      - created_at
+      - date
+      - description
+      - duration
+      - full_age
+      - id
+      - name
+    EventDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        description:
+          type: string
+        duration:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        date:
+          type: string
+          format: date-time
+        full_age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+        user:
+          type: string
+          format: uuid
+          nullable: true
+        address:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - created_at
+      - date
+      - description
+      - duration
+      - full_age
+      - id
+      - name
+    EventDistance:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        distance:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        description:
+          type: string
+        duration:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        date:
+          type: string
+          format: date-time
+        full_age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+        user:
+          type: string
+          format: uuid
+          nullable: true
+        address:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - created_at
+      - date
+      - description
+      - distance
+      - duration
+      - full_age
+      - id
+      - name
+    ListUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 20
+        is_staff:
+          type: boolean
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        cpf:
+          type: string
+          maxLength: 14
+        email:
+          type: string
+          format: email
+          maxLength: 127
+      required:
+      - cpf
+      - email
+      - first_name
+      - id
+      - last_name
+      - username
+    PaginatedAddressList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+    PaginatedBatchList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Batch'
+    PaginatedEventDistanceList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventDistance'
+    PaginatedEventList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    PaginatedListUserList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListUser'
+    PaginatedTicketList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ticket'
+    PaginatedZoneList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Zone'
+    PatchedAddress:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        city:
+          type: string
+          maxLength: 50
+        district:
+          type: string
+          maxLength: 100
+        street:
+          type: string
+          maxLength: 255
+        number:
+          type: string
+          maxLength: 30
+        zipcode:
+          type: string
+          maxLength: 20
+    PatchedBatchDetail:
+      type: object
+      properties:
+        number_batch:
+          type: string
+          readOnly: true
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        due_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        zone:
+          type: string
+          format: uuid
+    PatchedEventDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        description:
+          type: string
+        duration:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        date:
+          type: string
+          format: date-time
+        full_age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+        user:
+          type: string
+          format: uuid
+          nullable: true
+        address:
+          type: string
+          format: uuid
+          nullable: true
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          maxLength: 127
+        cpf:
+          type: string
+          maxLength: 14
+        birthdate:
+          type: string
+          format: date
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        is_staff:
+          type: boolean
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        created_at:
+          type: string
+          format: date-time
+        address:
+          $ref: '#/components/schemas/Address'
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user_id:
+          type: string
+          format: uuid
+          readOnly: true
+        batch_id:
+          type: string
+          format: uuid
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - batch_id
+      - created_at
+      - id
+      - user_id
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          maxLength: 127
+        cpf:
+          type: string
+          maxLength: 14
+        birthdate:
+          type: string
+          format: date
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        is_staff:
+          type: boolean
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        created_at:
+          type: string
+          format: date-time
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+      - address
+      - birthdate
+      - cpf
+      - email
+      - first_name
+      - id
+      - is_staff
+      - last_name
+      - password
+      - username
+    Zone:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        total_selled_tickets:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        event:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - created_at
+      - id
+      - name
+      - total_selled_tickets
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
