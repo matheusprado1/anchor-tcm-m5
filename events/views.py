@@ -6,7 +6,7 @@ from .mixins import SerializerByMethodMixin
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView, Request, Response, status
-from .mixins import SerializerByMethod
+from .mixins import SerializerByMethodMixin
 from .models import Event
 from .serializers import (EventDetailSerializer, EventDistanceSerializer,
                           EventSerializer)

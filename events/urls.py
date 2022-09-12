@@ -5,11 +5,11 @@ from .views import (
     EventDistanceGteView,
     EventDistanceLteView,
     EventDistanceView,
-    EventView,
+    ListCreateEventView,
 )
 
 urlpatterns = [
-    path("event/", EventView.as_view()),
+    path("event/", ListCreateEventView.as_view()),
     path(
         "event/<uuid:event_id>/", EventDetailView.as_view()
     ),  # caio mexeu aqui
