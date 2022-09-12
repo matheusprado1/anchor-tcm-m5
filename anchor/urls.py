@@ -19,6 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
 urlpatterns = [
 
     path('admin/', admin.site.urls),
@@ -27,6 +29,12 @@ urlpatterns = [
     path('api/', include('zones.urls')),
     path("api/", include("batchs.urls")),
     path("api/", include("addresses.urls")),
-    path("api/", include("tickets.urls"),)
+    path("api/", include("tickets.urls")),
+    # Acessa o download do schema
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Opcionais
+    path('schema/swagger-ui/',
+         SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
