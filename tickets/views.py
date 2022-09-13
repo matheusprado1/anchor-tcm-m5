@@ -18,7 +18,7 @@ class TicketView(generics.ListCreateAPIView):
         serializer.save()
 
 class UserTicketsView(generics.ListAPIView):
-    
+
     permission_classes = [IsSuperuser | IsUser]
 
     queryset = Ticket.objects.all()
