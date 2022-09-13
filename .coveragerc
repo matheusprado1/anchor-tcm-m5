@@ -1,0 +1,15 @@
+[run]
+source = .
+omit = 
+    venv/*
+    project_base/*
+    manage.py
+    # Ignora diretorios que comecem com tests
+    *tests*
+    # Ignora o diretorio de migrations
+    *migrations*
+    # Ignora arquivos que comecem com _
+    *_*
+
+[report]
+show_missing = True
