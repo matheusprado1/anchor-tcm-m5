@@ -61,6 +61,7 @@ THIRD_PARTY_APPS = [
 MY_APPS = [
     "users",
     "events",
+    "images",
     "batchs",
     "addresses",
     "tickets",
