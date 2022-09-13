@@ -20,10 +20,10 @@ class TestTicketView(APITestCase):
         cls.batch_1 = baker.make("batchs.Batch", quantity=100)
         cls.batch_2 = baker.make("batchs.Batch", quantity=100)
 
-        cls.ticket_data_1 = { "batch_id": str(cls.batch_1.id) }
+        cls.ticket_data_1 = { "batch": str(cls.batch_1.id) }
 
-        cls.INVALID_ticket_data = { "batch_id": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
-        cls.INVALID_type_for_ticket_data = { "batch_id": "10351033" }
+        cls.UNEXISTING_batch_for_ticket_data = { "batch": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
+        cls.INVALID_type_for_ticket_data = { "batch": "10351033" }
 
         cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.id) for i in range(6)]
 
@@ -90,7 +90,7 @@ class TestTicketView(APITestCase):
     def test_create_ticket_for_UNEXISTING_batch(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.post(self.path, self.INVALID_ticket_data)
+        response = self.client.post(self.path, self.UNEXISTING_batch_for_ticket_data)
 
         expected_response = { "detail": "Not found." }
 
@@ -102,7 +102,7 @@ class TestTicketView(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
         response = self.client.post(self.path, {})
 
-        expected_response = { "batch_id": ["This field is required."] }
+        expected_response = { "batch": ["This field is required."] }
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, expected_response)
@@ -112,7 +112,9 @@ class TestTicketView(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
         response = self.client.post(self.path, self.INVALID_type_for_ticket_data)
 
-        expected_response = { "batch_id": ["Must be a valid UUID."] }
+        expected_response = {
+            "batch": [f'“{self.INVALID_type_for_ticket_data["batch"]}” is not a valid UUID.']
+        }
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, expected_response)
