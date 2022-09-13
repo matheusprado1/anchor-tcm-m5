@@ -11,7 +11,7 @@ class TestUserTicketsView(APITestCase):
     def setUpTestData(cls) -> None:
 
         cls.ownerUser = baker.make("users.User")
-        cls.commonUser = baker.make("users.User")
+        cls.commonUser = baker.make("users.User", is_superuser=False)
         cls.superUser = baker.make("users.User", is_superuser=True)
 
         cls.ownerUser_token = Token.objects.create(user=cls.ownerUser).key
@@ -20,6 +20,7 @@ class TestUserTicketsView(APITestCase):
         cls.INVALID_token = "10351033"
 
         cls.ticket_list = [baker.make("tickets.Ticket", user_id=cls.ownerUser.id) for i in range(6)]
+        # create an aleatory ticket to check if is it filtering correctly
         baker.make("tickets.Ticket")
 
         cls.path = f"/api/tickets/user/{cls.ownerUser.id}/"
@@ -71,37 +72,6 @@ class TestUserTicketsView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
 
-    def test_list_tickets_from_user_with_INVALID_permissions(self):
-        
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-        response = self.client.get(self.path)
-
-        expected_response = { "detail": "You do not have permission to perform this action." }
-
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertEqual(response.data, expected_response)
-    
-
-    def test_list_tickets_from_user_WITHOUT_token(self):
-
-        response = self.client.get(self.path)
-
-        expected_response = {
-            "detail": "Authentication credentials were not provided."
-        }
-
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(response.data, expected_response)
-
-    def test_list_tickets_from_user_with_INVALID_token(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.INVALID_token}")
-        response = self.client.get(self.path)
-
-        expected_response = { "detail": "Invalid token." }
-
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(response.data, expected_response)
-
     def test_paginate_in_list_tickets_from_user(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superUser_token}")
@@ -124,3 +94,32 @@ class TestUserTicketsView(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
+
+    def test_list_tickets_from_user_with_INVALID_permission(self):
+        
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
+        response = self.client.get(self.path)
+
+        expected_response = { "detail": "You do not have permission to perform this action." }
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data, expected_response)
+    
+    def test_list_tickets_from_user_WITHOUT_token(self):
+
+        response = self.client.get(self.path)
+
+        expected_response = { "detail": "Authentication credentials were not provided." }
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data, expected_response)
+
+    def test_list_tickets_from_user_with_INVALID_token(self):
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.INVALID_token}")
+        response = self.client.get(self.path)
+
+        expected_response = { "detail": "Invalid token." }
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data, expected_response)
+

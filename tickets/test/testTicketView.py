@@ -10,7 +10,7 @@ class TestTicketView(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
 
-        cls.commonUser = baker.make("users.User")
+        cls.commonUser = baker.make("users.User", is_superuser=False)
         cls.superUser = baker.make("users.User", is_superuser=True)
 
         cls.commonUser_token = Token.objects.create(user=cls.commonUser).key
@@ -161,7 +161,7 @@ class TestTicketView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
     
-    def test_list_tickets_with_INVALID_permissions(self):
+    def test_list_tickets_with_INVALID_permission(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
         response = self.client.get(self.path)
