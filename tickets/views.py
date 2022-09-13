@@ -6,7 +6,7 @@ from batchs.erros import (
 from batchs.models import Batch
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from rest_framework.views import APIView, Request, Response, status
+from rest_framework.views import Response, status
 
 from tickets.models import Ticket
 from tickets.permissions import (
@@ -19,6 +19,7 @@ from tickets.serializers import TicketSerializer
 
 
 class TicketView(generics.ListCreateAPIView):
+
     permission_classes = [IsSuperuserOrAuthenticatedToCreate]
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
@@ -63,6 +64,7 @@ class TicketView(generics.ListCreateAPIView):
 
 
 class UserTicketsView(generics.ListAPIView):
+    
     permission_classes = [IsSuperuser | IsUser]
 
     queryset = Ticket.objects.all()
