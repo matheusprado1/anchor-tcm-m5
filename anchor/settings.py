@@ -200,8 +200,6 @@ cloudinary.config(
     secure=True,
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 if 'test' in sys.argv or 'test\_coverage' in sys.argv:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['NAME'] = ':memory:'
