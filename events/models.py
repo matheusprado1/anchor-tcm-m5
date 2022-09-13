@@ -1,6 +1,6 @@
 import uuid
 
-from cloudinary.models import CloudinaryField
+# from cloudinary.models import CloudinaryField
 from django.core.exceptions import ValidationError
 from django.db import models
 
