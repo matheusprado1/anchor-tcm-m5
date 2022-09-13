@@ -20,12 +20,12 @@ class TestTicketView(APITestCase):
         cls.batch_1 = baker.make("batchs.Batch", quantity=100)
         cls.batch_2 = baker.make("batchs.Batch", quantity=100)
 
-        cls.ticket_data_1 = { "batch_id": str(cls.batch_1.batch_id) }
+        cls.ticket_data_1 = { "batch_id": str(cls.batch_1.id) }
 
         cls.INVALID_ticket_data = { "batch_id": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
         cls.INVALID_type_for_ticket_data = { "batch_id": "10351033" }
 
-        cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.batch_id) for i in range(6)]
+        cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.id) for i in range(6)]
 
         cls.path = "/api/tickets/"
     
