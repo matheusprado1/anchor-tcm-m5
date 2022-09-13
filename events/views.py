@@ -9,29 +9,18 @@ from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
 )
 from rest_framework.views import APIView, Request, Response, status
-<<<<<<< HEAD
-=======
 
 from .mixins import SerializerByMethodMixin
->>>>>>> developer
 from .models import Event
 from .serializers import (EventDetailSerializer, EventDistanceSerializer,
                           EventSerializer)
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
-<<<<<<< HEAD
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
-
-  serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
-  queryset = Event.objects.all()
-=======
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
     queryset = Event.objects.all()
->>>>>>> developer
 
     lookup_url_kwarg = "event_id"
 
