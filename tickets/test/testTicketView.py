@@ -23,7 +23,7 @@ class TestTicketView(APITestCase):
         cls.ticket_data_1 = { "batch_id": str(cls.batch_1.batch_id) }
 
         cls.INVALID_ticket_data = { "batch_id": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
-        cls.INVALID_type_for_ticket_data = { "batch_id": "1" }
+        cls.INVALID_type_for_ticket_data = { "batch_id": "10351033" }
 
         cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.batch_id) for i in range(6)]
 
@@ -141,7 +141,7 @@ class TestTicketView(APITestCase):
     def test_paginate_in_list_tickets(self):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.superUser_token}")
-        response = self.client.get("/api/tickets/?page=2")
+        response = self.client.get(f"{self.path}?page=2")
 
         results = [
             OrderedDict([ 
