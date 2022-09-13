@@ -2,7 +2,7 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 from batchs.models import Batch
 
-from tickets.permissions import IsSuperuser, IsUser, IsOwner, IsSuperuserOrAuthenticatedToCreate, IsUser
+from tickets.permissions import IsSuperuserOrAuthenticatedToCreate, IsSuperuser, IsUser, IsSuperuserOrIsOwner
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
 
@@ -14,10 +14,8 @@ class TicketView(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
 
     def perform_create(self, serializer):
-        
         get_object_or_404(Batch, pk=serializer.validated_data["batch_id"])
         serializer.save()
-
 
 class UserTicketsView(generics.ListAPIView):
     
@@ -32,7 +30,7 @@ class UserTicketsView(generics.ListAPIView):
 class TicketDeleteView(generics.DestroyAPIView):
 
     lookup_url_kwarg = "ticket_id"
-    permission_classes = [IsSuperuser | IsOwner]
+    permission_classes = [IsSuperuserOrIsOwner]
 
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
