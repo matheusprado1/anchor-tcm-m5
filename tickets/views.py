@@ -19,13 +19,15 @@ class TicketView(generics.ListCreateAPIView):
         serializer.save()
 
 
-class TicketRetrieveView(generics.RetrieveAPIView):
+class UserTicketsView(generics.ListAPIView):
     
-    lookup_url_kwarg = "user_id"
     permission_classes = [IsSuperuser | IsUser]
 
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user_id=self.kwargs["user_id"])
 
 class TicketDeleteView(generics.DestroyAPIView):
 
