@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from rest_framework.views import Request, View
 
-from addresses.models import Address
+from batchs.models import Batch
 
 
 class SuperUserAuth(permissions.BasePermission):
@@ -11,4 +11,5 @@ class SuperUserAuth(permissions.BasePermission):
             and request.user.is_authenticated
             and request.user.is_superuser
         )
+
 
