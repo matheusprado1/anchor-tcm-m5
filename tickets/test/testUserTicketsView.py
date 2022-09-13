@@ -95,7 +95,7 @@ class TestUserTicketsView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
 
-    def test_list_tickets_from_user_with_INVALID_permission(self):
+    def test_list_userTickets_with_INVALID_permission(self):
         
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
         response = self.client.get(self.path)
@@ -105,7 +105,7 @@ class TestUserTicketsView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(response.data, expected_response)
     
-    def test_list_tickets_from_user_WITHOUT_token(self):
+    def test_list_userTickets_WITHOUT_token(self):
 
         response = self.client.get(self.path)
 
@@ -114,7 +114,7 @@ class TestUserTicketsView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data, expected_response)
 
-    def test_list_tickets_from_user_with_INVALID_token(self):
+    def test_list_userTickets_with_INVALID_token(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.INVALID_token}")
         response = self.client.get(self.path)
 
