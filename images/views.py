@@ -5,7 +5,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 
-class ImageView(generics.CreateAPIView):
+class EventImageView(generics.CreateAPIView):
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -15,7 +15,7 @@ class ImageView(generics.CreateAPIView):
   lookup_url_kwarg = "event_id"
 
 
-class ListImageView(generics.ListAPIView):
+class EventListImageView(generics.ListAPIView):
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -23,7 +23,7 @@ class ListImageView(generics.ListAPIView):
   serializer_class = ImageSerializer
 
 
-class ImageDetailView(generics.RetrieveUpdateDestroyAPIView):
+class EventImageDetailView(generics.RetrieveUpdateDestroyAPIView):
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticatedOrReadOnly]
 
