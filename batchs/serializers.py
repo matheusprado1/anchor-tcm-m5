@@ -25,12 +25,10 @@ class BatchSerializer(serializers.ModelSerializer):
 
 class BatchDetailSerializer(serializers.ModelSerializer):
 
-    number_batch = serializers.SerializerMethodField()
-
     class Meta:
         model = Batch
         fields = [
-            "batch_id",
+            "id",
             "number_batch",
             "price",
             "quantity",
@@ -43,6 +41,3 @@ class BatchDetailSerializer(serializers.ModelSerializer):
             "created_at",
             "number_batch",
         ]
-
-    def get_number_batch(self, obj):
-        return
