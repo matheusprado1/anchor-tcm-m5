@@ -1,9 +1,9 @@
 import uuid
-from rest_framework.test import APITestCase
+from django.test import TestCase
 from model_bakery import baker
 
 
-class TicketModelTest(APITestCase):
+class TicketModelTest(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
 
