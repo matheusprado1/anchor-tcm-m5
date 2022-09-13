@@ -1,3 +1,5 @@
+import math
+
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
 from rest_framework import serializers
@@ -25,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_superuser",
             "created_at",
             "address",
+            "age",
         ]
 
         extra_kwargs = {
@@ -58,6 +61,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     read_only_fields = ["is_superuser", "created_at", "is_active"]
 
+    def validate_cpf(self, cpf):
+        if len(cpf) != 11:
+            raise serializers.ValidationError(
+                "The cpf field must have 11 digits"
+            )
+        return cpf
+
     def create(self, validated_data):
         validated_address, _ = Address.objects.get_or_create(
             **validated_data.pop("address")
@@ -65,6 +75,9 @@ class UserSerializer(serializers.ModelSerializer):
         return User.objects.create_user(
             **validated_data, address=validated_address
         )
+
+    def get_age(self, obj):
+        return obj.age
 
     def update(self, instance, validated_data):
         if validated_data.get("address"):

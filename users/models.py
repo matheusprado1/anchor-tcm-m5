@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from addresses.models import Address
 from django.contrib.auth.models import AbstractUser
@@ -13,7 +14,7 @@ class User(AbstractUser):
     )
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=127, unique=True)
-    cpf = models.CharField(max_length=14, unique=True, null=False)
+    cpf = models.CharField(max_length=11, unique=True, null=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     is_staff = models.BooleanField()
@@ -31,6 +32,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "username", "birthdate"]
     objects = MyUserManager()
+
+    def age(self):
+        return int((datetime.now().date() - self.birthdate).days / 365.25)
 
     def save(self, *args, **kwargs):
         self.username = self.username.lower()

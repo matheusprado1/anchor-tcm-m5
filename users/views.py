@@ -1,10 +1,13 @@
-
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.views import APIView, Response, status
 
 from .mixins import SerializerByMethodMixin
@@ -53,6 +56,9 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ImageView(generics.CreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
