@@ -4,10 +4,8 @@ from addresses.models import Address
 from .serializers import EventSerializer, EventDetailSerializer, EventDistanceSerializer
 from .mixins import SerializerByMethodMixin
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permissions import IsSuperuser, IsUser, IsOwner, IsSuperuserOrAuthenticatedToCreate, IsUser
 from rest_framework.views import APIView, Request, Response, status
 
 from .mixins import SerializerByMethodMixin
@@ -17,7 +15,7 @@ from .serializers import (EventDetailSerializer, EventDistanceSerializer,
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsSuperuserOrAuthenticatedToCreate]
 
     serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
     queryset = Event.objects.all()
@@ -27,7 +25,7 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsSuperuser | IsOwner]
 
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer

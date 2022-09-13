@@ -6,3 +6,4 @@ commands.txt
 uploads
 htmlcov
 .coverage
+.coveragerc

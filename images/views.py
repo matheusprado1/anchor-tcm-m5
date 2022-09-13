@@ -2,7 +2,7 @@ from rest_framework import generics
 from .models import Image
 from .serializers import ImageSerializer
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 
 class ImageView(generics.CreateAPIView):

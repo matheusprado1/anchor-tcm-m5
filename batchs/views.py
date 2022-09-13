@@ -11,7 +11,7 @@ class BatchsView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
     serializer_class = BatchSerializer
-    lookup_field = "batch_id"
+    lookup_field = "id"
 
     def perform_create(self, serializer):
         zone = serializer.validated_data["zone"]
@@ -24,4 +24,4 @@ class UpdateBatchsView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
     serializer_class = BatchDetailSerializer
-    lookup_field = "batch_id"
+    lookup_field = "id"
