@@ -92,9 +92,12 @@ class TestTicketView(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
         response = self.client.post(self.path, self.UNEXISTING_batch_for_ticket_data)
 
-        expected_response = { "detail": "Not found." }
+        expected_response = {
+            "batch": [
+                f'Invalid pk \"{self.UNEXISTING_batch_for_ticket_data["batch"]}\" - object does not exist.'
+        ]}
 
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, expected_response)
 
     def test_create_ticket_with_EMPTY_body(self):
