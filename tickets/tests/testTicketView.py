@@ -36,10 +36,13 @@ class TestTicketView(APITestCase):
 
         expected_response = {
             "id": response.data["id"], 
-            "user_id": self.commonUser.id, 
-            "batch_id": self.ticket_data_1["batch_id"], 
+            "user": self.commonUser.id, 
+            "batch": self.ticket_data_1["batch_id"], 
             "created_at": response.data["created_at"]
         }
+
+        # import ipdb
+        # ipdb.set_trace()
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, expected_response)
@@ -56,8 +59,8 @@ class TestTicketView(APITestCase):
 
             expected_response = {
                 "id": response.data["id"], 
-                "user_id": user.id, 
-                "batch_id": self.ticket_data_1["batch_id"], 
+                "user": user.id, 
+                "batch": self.ticket_data_1["batch_id"], 
                 "created_at": response.data["created_at"]
             }
 
@@ -123,8 +126,8 @@ class TestTicketView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4)]
         
@@ -146,8 +149,8 @@ class TestTicketView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4,6)]
         

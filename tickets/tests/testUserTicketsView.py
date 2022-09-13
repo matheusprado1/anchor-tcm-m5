@@ -34,8 +34,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4)]
         
@@ -57,8 +57,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4)]
         
@@ -68,7 +68,9 @@ class TestUserTicketsView(APITestCase):
             ("previous", None), 
             ("results", results)
         ])
-
+        
+        import ipdb
+        # ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
 
@@ -80,8 +82,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4,6)]
         
