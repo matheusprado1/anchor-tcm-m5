@@ -1,10 +1,9 @@
-from asyncio.unix_events import BaseChildWatcher
 import uuid
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from model_bakery import baker
 
 
-class TicketModelTest(TestCase):
+class TicketModelTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
 
