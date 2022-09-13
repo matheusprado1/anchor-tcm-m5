@@ -28,7 +28,7 @@ class TicketView(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         batch = get_object_or_404(
-            Batch, pk=serializer.validated_data["batch_id"]
+            Batch, pk=serializer.validated_data["batch"].id
         )
 
         user = self.request.user

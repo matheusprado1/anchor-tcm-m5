@@ -7,10 +7,10 @@ from tickets.models import Ticket
 
 
 class TicketSerializer(serializers.ModelSerializer):
-
-    batch_id = UUIDField()
-
     class Meta:
         model = Ticket
-        fields = ["id", "user_id", "batch_id", "created_at"]
-        extra_kwargs = {"qnt_tickets": {"write_only": True}}
+        fields = ["id", "user", "batch", "created_at"]
+        extra_kwargs = {
+            "qnt_tickets": {"write_only": True},
+            "user": {"read_only": True},
+        }
