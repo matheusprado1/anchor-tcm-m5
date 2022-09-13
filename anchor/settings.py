@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 import cloudinary
@@ -220,5 +221,9 @@ cloudinary.config(
     api_secret="CMu43VSuh0uA1KU5VQXYQfXALSk",
     secure=True,
 )
+
+if 'test' in sys.argv or 'test\_coverage' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES['default']['NAME'] = ':memory:'
 
 django_on_heroku.settings(locals())
