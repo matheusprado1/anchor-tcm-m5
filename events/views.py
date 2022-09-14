@@ -1,17 +1,14 @@
-from numbers import Number
-
-from addresses.models import Address
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 from events.serializers import EventDetailSerializer, EventDistanceSerializer, EventSerializer
 
 from .permissions import IsSuperuserOrIsOwner
-from rest_framework.views import APIView, Request, Response, status
 
 from .mixins import SerializerByMethodMixin
 from .models import Event
+
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -51,7 +48,6 @@ class EventDistanceLteView(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
         dist = kwargs["dist"]
-        # IS NOT STR ADC POIS SE NÃO TIVER A LOCALIZAÇÃO, NÃO DEVE SER FILTRADO
         filtered_serializer = [
             event
             for event in serializer.data
@@ -71,7 +67,6 @@ class EventDistanceGteView(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
         dist = kwargs["dist"]
-        # IS NOT STR ADC POIS SE NÃO TIVER A LOCALIZAÇÃO, NÃO DEVE SER FILTRADO
         filtered_serializer = [
             event
             for event in serializer.data

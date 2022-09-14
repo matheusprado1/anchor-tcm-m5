@@ -25,16 +25,6 @@ class EventListImageView(generics.ListAPIView):
     serializer_class = ImageSerializer
 
 
-class EventImageDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
-
-    lookup_url_kwarg = "image_id"
-
-
 class UserImageView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -53,7 +43,7 @@ class UserListImageView(generics.ListAPIView):
     serializer_class = ImageSerializer
 
 
-class UserImageDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ImageDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 

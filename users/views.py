@@ -1,20 +1,14 @@
 from django.contrib.auth import authenticate
-from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
+
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
 from rest_framework.views import APIView, Response, status
 
 from .mixins import SerializerByMethodMixin
-from .models import Image, User
+from .models import User
 from .permissions import IsUserAdmin, IsUserOwner
 from .serializers import (
-    ImageSerializer,
     ListUserSerializer,
     LoginSerializer,
     UserSerializer,
@@ -52,19 +46,6 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance.set_password(instance.password)
         instance.save()
 
-
-class ImageView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
-
-    lookup_url_kwarg = "user_id"
-
-    def perform_create(self, serializer):
-
-        user = get_object_or_404(User, id=self.kwargs["user_id"])
-        serializer.save(user=user)
 
 
 class LoginView(APIView):
