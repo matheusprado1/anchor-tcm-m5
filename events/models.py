@@ -34,7 +34,7 @@ class Event(models.Model):
     address = models.ForeignKey(
         "addresses.Address",
         on_delete=models.DO_NOTHING,
-        related_name="event",
+        related_name="events",
         default="",
         null=True,
     )

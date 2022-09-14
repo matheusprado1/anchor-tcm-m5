@@ -2,7 +2,6 @@ import uuid
 
 from batchs.models import Batch
 from django.db import models
-from tickets.models import Ticket
 
 
 class Zone(models.Model):
