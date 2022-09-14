@@ -8,7 +8,7 @@ class IsSuperuser(BasePermission):
 
 class IsUser(BasePermission):
     def has_permission(self, request: Request, view: View)-> bool:
-        return str(request.user.id) == view.kwargs["user_id"]
+        return request.user.id == view.kwargs["user_id"]
 
 class IsSuperuserOrIsOwner(BasePermission):
     def has_object_permission(self, request: Request, view: View, obj)-> bool:

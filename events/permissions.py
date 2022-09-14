@@ -2,19 +2,10 @@ from rest_framework.permissions import BasePermission
 from rest_framework.views import Request, View
 
 
-class IsSuperuser(BasePermission):
+class IsSuperuserOrIsOwner(BasePermission):
     def has_permission(self, request: Request, view: View)-> bool:
-        return request.user.is_superuser
+      if (request.method != "GET"):
 
-class IsUser(BasePermission):
-    def has_permission(self, request: Request, view: View)-> bool:
-        return str(request.user.id) == view.kwargs["user_id"]
+        return request.user.is_superuser or request.user.is_staff
 
-class IsOwner(BasePermission):
-    def has_object_permission(self, request: Request, view: View, obj)-> bool:
-        obj.user == request.user
-
-
-class IsSuperuserOrAuthenticatedToCreate(BasePermission):
-    def has_permission(self, request: Request, view: View)-> bool:
-        return request.user.is_superuser or (request.method != "GET" and request.user.is_authenticated)
+      return True

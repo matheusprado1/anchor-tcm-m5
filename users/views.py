@@ -30,7 +30,6 @@ class UserFilter(filters.FilterSet):
 
 
 class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserAdmin]
 
     queryset = User.objects.all().order_by("created_at")
@@ -41,7 +40,6 @@ class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserOwner]
 
     lookup_url_kwarg = "user_id"
@@ -56,7 +54,6 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ImageView(generics.CreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = Image.objects.all()
