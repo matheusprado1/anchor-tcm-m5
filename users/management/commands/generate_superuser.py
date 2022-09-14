@@ -21,4 +21,5 @@ class Command(BaseCommand):
             birthdate="1999-9-9",
             first_name="admin",
             last_name="admin",
+            is_staff=True
         )
