@@ -5,6 +5,8 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
+from events.serializers import EventDetailSerializer, EventDistanceSerializer, EventSerializer
+
 from .permissions import IsSuperuserOrIsOwner
 from rest_framework.views import APIView, Request, Response, status
 

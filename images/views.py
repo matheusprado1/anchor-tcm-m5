@@ -7,11 +7,9 @@ from .models import Image
 from .serializers import ImageSerializer
 
 
-
 class EventImageView(generics.CreateAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
-
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
@@ -20,24 +18,21 @@ class EventImageView(generics.CreateAPIView):
 
 
 class EventListImageView(generics.ListAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
-
-
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
 
-
 class EventImageDetailView(generics.RetrieveUpdateDestroyAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-  queryset = Image.objects.all()
-  serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
 
-  lookup_url_kwarg = "image_id"
+    lookup_url_kwarg = "image_id"
 
 
 class UserImageView(generics.CreateAPIView):
@@ -51,17 +46,16 @@ class UserImageView(generics.CreateAPIView):
 
 
 class UserListImageView(generics.ListAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-  queryset = Image.objects.all()
-  serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
 
 
 class UserImageDetailView(generics.RetrieveUpdateDestroyAPIView):
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
-
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
