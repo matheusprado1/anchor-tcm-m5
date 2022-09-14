@@ -1215,7 +1215,7 @@ components:
         date:
           type: string
           format: date-time
-        full_age:
+        classification:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
@@ -1233,7 +1233,7 @@ components:
       - date
       - description
       - duration
-      - full_age
+      - classification
       - id
       - name
     EventDetail:
@@ -1255,7 +1255,7 @@ components:
         date:
           type: string
           format: date-time
-        full_age:
+        classification:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
@@ -1278,7 +1278,7 @@ components:
       - date
       - description
       - duration
-      - full_age
+      - classification
       - id
       - name
     EventDistance:
@@ -1303,7 +1303,7 @@ components:
         date:
           type: string
           format: date-time
-        full_age:
+        classification:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
@@ -1327,7 +1327,7 @@ components:
       - description
       - distance
       - duration
-      - full_age
+      - classification
       - id
       - name
     Image:
@@ -1609,7 +1609,7 @@ components:
         date:
           type: string
           format: date-time
-        full_age:
+        classification:
           type: integer
           maximum: 2147483647
           minimum: -2147483648

@@ -14,7 +14,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ["id", "name", "description", "duration", "date",
-                  "full_age", "created_at", "is_active", "address"]
+                  "classification", "created_at", "is_active", "address"]
         read_only_fields = ["created_at"]
 
         extra_kwargs = {

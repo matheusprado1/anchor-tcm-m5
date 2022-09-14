@@ -33,7 +33,7 @@ class TicketView(generics.ListCreateAPIView):
 
         user = self.request.user
         try:
-            if user.age() < batch.zone.event.full_age:
+            if user.age() < batch.zone.event.classification:
                 raise AgeValidationError
             if batch.is_date_valid() is False:
                 raise DataValidationError

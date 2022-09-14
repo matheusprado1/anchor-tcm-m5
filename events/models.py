@@ -10,7 +10,7 @@ class Event(models.Model):
     description = models.TextField()
     duration = models.IntegerField()
     date = models.DateTimeField()
-    full_age = models.IntegerField()
+    classification = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
