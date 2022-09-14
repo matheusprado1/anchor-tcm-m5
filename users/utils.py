@@ -66,6 +66,7 @@ class MyUserManager(BaseUserManager):
         birthdate,
         first_name,
         last_name,
+        is_staff,
         **extra_fields,
     ):
 
@@ -76,7 +77,7 @@ class MyUserManager(BaseUserManager):
             birthdate,
             first_name,
             last_name,
-            False,
+            is_staff,
             True,
             **extra_fields,
         )
