@@ -1,11 +1,11 @@
-import math
-
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import Image, User
+from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -72,9 +72,21 @@ class UserSerializer(serializers.ModelSerializer):
         validated_address, _ = Address.objects.get_or_create(
             **validated_data.pop("address")
         )
-        return User.objects.create_user(
+
+        user_mail = User.objects.create_user(
             **validated_data, address=validated_address
         )
+        from_email = settings.EMAIL_HOST_USER
+        subject = "Welcome to Anchor"
+        message = (
+            f"Congratulations {user_mail.username}, thank you for registering"
+            " in Anchor"
+        )
+        recipient_list = [
+            user_mail.email,
+        ]
+        send_mail(subject, message, from_email, recipient_list)
+        return user_mail
 
     def get_age(self, obj):
         return obj.age
@@ -115,7 +127,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
 
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ["id", "title", "photo", "user_id"]
+# class ImageSerializer(serializers.ModelSerializer):
+# class Meta:
+# model = Image
+# fields = ["id", "title", "photo", "user_id"]
