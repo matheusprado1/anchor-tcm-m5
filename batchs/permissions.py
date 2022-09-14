@@ -20,6 +20,5 @@ class IsOwner(BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-
         zone = get_object_or_404(Zone, id=request.data["zone"])
         return zone.event.user == request.user

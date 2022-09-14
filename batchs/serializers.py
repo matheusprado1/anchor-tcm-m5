@@ -21,6 +21,7 @@ class BatchSerializer(serializers.ModelSerializer):
             "total_sold_tickets",
             "revenue",
         ]
+
         read_only_fields = [
             "created_at",
             "id",
@@ -28,6 +29,7 @@ class BatchSerializer(serializers.ModelSerializer):
             "total_sold_tickets",
             "revenue",
         ]
+
 
     def get_total_sold_tickets(self, obj):
         return obj.get_sold_tickets()
@@ -37,8 +39,10 @@ class BatchSerializer(serializers.ModelSerializer):
 
 
 class BatchDetailSerializer(serializers.ModelSerializer):
+
     total_sold_tickets = serializers.SerializerMethodField()
     revenue = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Batch

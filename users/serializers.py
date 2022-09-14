@@ -1,9 +1,16 @@
-from rest_framework.validators import UniqueValidator
-from rest_framework import serializers
 
 from addresses.models import Address
 from users.models import User
 from addresses.serializers import AddressSerializer
+
+from django.conf import settings
+from django.core.mail import send_mail
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+
+from users.models import User
+
+
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -69,10 +76,11 @@ class UserSerializer(serializers.ModelSerializer):
         return cpf
 
     def create(self, validated_data):
-        validated_address, _ = Address.objects.get_or_create(
-            **validated_data.pop("address")
+        address_serializer = AddressSerializer(
+            data=validated_data.pop("address")
         )
-
+        address_serializer.is_valid(raise_exception=True)
+        validated_address = address_serializer.save()
         user_mail = User.objects.create_user(
             **validated_data, address=validated_address
         )
