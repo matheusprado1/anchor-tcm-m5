@@ -25,7 +25,9 @@ from .serializers import (
 
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
-			"distance": 0.0,    permission_classes = [IsSuperuserOrAuthenticatedToCreate]
+
+    # "distance": 0.0
+    permission_classes = [IsSuperuserOrAuthenticatedToCreate]
 
     serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
     queryset = Event.objects.all()
