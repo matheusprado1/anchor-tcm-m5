@@ -24,7 +24,7 @@ class TestUserTicketsView(APITestCase):
         baker.make("tickets.Ticket")
 
         cls.path = f"/api/tickets/user/{cls.ownerUser.id}/"
-        cls.INVALID_path = "/api/tickets/user/10351033/"
+        cls.INVALID_path = "/api/tickets/user/f694d31e-5dd2-4b56-aa4b-b3eeb57a0965/"
 
     def test_list_tickets_from_user_as_superUser(self):
 
