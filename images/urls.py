@@ -3,7 +3,7 @@ from .views import (
     EventImageView,
     EventListImageView,
     UserImageView,
-    UserImageDetailView,
+    ImageDetailView,
 )
 
 urlpatterns = [
@@ -14,5 +14,5 @@ urlpatterns = [
     path(
         "image/<user_id>/", UserImageView.as_view()
     ),
-    path("images/<image_id>/", UserImageDetailView.as_view()),
+    path("images/<image_id>/", ImageDetailView.as_view()),
 ]

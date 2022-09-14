@@ -1,7 +1,8 @@
+from geopy import distance
+
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
-from geopy import distance
-from geopy.geocoders import Nominatim
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -47,7 +48,6 @@ class EventSerializer(serializers.ModelSerializer):
         return Event.objects.create(
             **validated_data, address=validated_address, user=self.context['request'].user
         )
-
 
     def update(self, instance, validated_data):
         if validated_data.get("address"):

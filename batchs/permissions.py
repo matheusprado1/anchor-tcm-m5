@@ -1,3 +1,4 @@
+from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 from rest_framework.views import Request, View
 from zones.models import Zone
@@ -16,5 +17,7 @@ class SuperUserAuth(BasePermission):
 
 class IsOwner(BasePermission):
     def has_permission(self, request, view):
-        zone = Zone.objects.get(id=request.data['zone'])
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        zone = Zone.objects.get(id=request.data["zone"])
         return zone.event.user == request.user

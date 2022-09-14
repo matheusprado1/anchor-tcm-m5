@@ -20,7 +20,4 @@ class IsUserOwner(permissions.BasePermission):
             and request.user.is_authenticated
             or request.user.is_superuser
             and user.is_superuser is False
-            # se ele nao for super user e for objeto dele
-            # se ele for superuser e for objecto dele
-            # se ele for superuser e o objeto for de um user
         )
