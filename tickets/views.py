@@ -1,21 +1,22 @@
+from rest_framework import generics
+from rest_framework.views import Response, status
+
 from batchs.erros import (
     AgeValidationError,
     DataValidationError,
     TicketValidationError,
 )
-from batchs.models import Batch
-from django.shortcuts import get_object_or_404
-from rest_framework import generics
-from rest_framework.views import APIView, Request, Response, status
 
+from batchs.models import Batch
 from tickets.models import Ticket
+from tickets.serializers import TicketSerializer
+
 from tickets.permissions import (
     IsSuperuser,
     IsSuperuserOrAuthenticatedToCreate,
     IsSuperuserOrIsOwner,
     IsUser,
 )
-from tickets.serializers import TicketSerializer
 
 
 class TicketView(generics.ListCreateAPIView):
@@ -27,11 +28,9 @@ class TicketView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        batch = get_object_or_404(
-            Batch, pk=serializer.validated_data["batch"].id
-        )
-
+        batch = Batch.objects.get( pk=serializer.validated_data["batch"].id )
         user = self.request.user
+
         try:
             if user.age() < batch.zone.event.full_age:
                 raise AgeValidationError

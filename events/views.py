@@ -1,16 +1,15 @@
-from rest_framework import generics
-from .models import Event
+from numbers import Number
+
 from addresses.models import Address
-from .serializers import EventSerializer, EventDetailSerializer, EventDistanceSerializer
-from .mixins import SerializerByMethodMixin
+from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+
 from .permissions import IsSuperuserOrIsOwner
 from rest_framework.views import APIView, Request, Response, status
 
 from .mixins import SerializerByMethodMixin
 from .models import Event
-
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -23,6 +22,7 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
+
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsSuperuserOrIsOwner]
 
@@ -33,15 +33,13 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class EventDistanceView(generics.ListAPIView):
-    authentication_classes = [TokenAuthentication]
-
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDistanceSerializer
 
 
+# VIEW PARA LESS THAN OR EQUAL
 class EventDistanceLteView(generics.ListAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDistanceSerializer
@@ -51,14 +49,17 @@ class EventDistanceLteView(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
         dist = kwargs["dist"]
+        # IS NOT STR ADC POIS SE NÃO TIVER A LOCALIZAÇÃO, NÃO DEVE SER FILTRADO
         filtered_serializer = [
-            event for event in serializer.data if event["distance"] < dist
+            event
+            for event in serializer.data
+            if type(event["distance"]) is not str and event["distance"] <= dist
         ]
         return self.get_paginated_response(filtered_serializer)
 
 
+# VIEW PARA GREATHER THAN OR EQUAL
 class EventDistanceGteView(generics.ListAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDistanceSerializer
@@ -68,7 +69,10 @@ class EventDistanceGteView(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
         dist = kwargs["dist"]
+        # IS NOT STR ADC POIS SE NÃO TIVER A LOCALIZAÇÃO, NÃO DEVE SER FILTRADO
         filtered_serializer = [
-            event for event in serializer.data if event["distance"] > dist
+            event
+            for event in serializer.data
+            if type(event["distance"]) is not str and event["distance"] >= dist
         ]
         return self.get_paginated_response(filtered_serializer)

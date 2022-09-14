@@ -69,9 +69,12 @@ class UserSerializer(serializers.ModelSerializer):
         return cpf
 
     def create(self, validated_data):
-        validated_address, _ = Address.objects.get_or_create(
-            **validated_data.pop("address")
+        address_serializer = AddressSerializer(
+            data=validated_data.pop("address")
         )
+        address_serializer.is_valid(raise_exception=True)
+
+        validated_address = address_serializer.save()
         return User.objects.create_user(
             **validated_data, address=validated_address
         )

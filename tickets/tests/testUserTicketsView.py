@@ -19,12 +19,12 @@ class TestUserTicketsView(APITestCase):
         cls.superUser_token = Token.objects.create(user=cls.superUser).key
         cls.INVALID_token = "10351033"
 
-        cls.ticket_list = [baker.make("tickets.Ticket", user_id=cls.ownerUser.id) for i in range(6)]
+        cls.ticket_list = baker.make("tickets.Ticket", _quantity=6, user_id=cls.ownerUser.id)
         # create an aleatory ticket to check if is it filtering correctly
         baker.make("tickets.Ticket")
 
         cls.path = f"/api/tickets/user/{cls.ownerUser.id}/"
-        cls.INVALID_path = "/api/tickets/user/10351033/"
+        cls.INVALID_path = "/api/tickets/user/f694d31e-5dd2-4b56-aa4b-b3eeb57a0965/"
 
     def test_list_tickets_from_user_as_superUser(self):
 
@@ -34,8 +34,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4)]
         
@@ -57,8 +57,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4)]
         
@@ -68,7 +68,7 @@ class TestUserTicketsView(APITestCase):
             ("previous", None), 
             ("results", results)
         ])
-
+        
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
 
@@ -80,8 +80,8 @@ class TestUserTicketsView(APITestCase):
         results = [
             OrderedDict([ 
                 ("id", str(self.ticket_list[i].id)),
-                ("user_id", self.ticket_list[i].user_id),
-                ("batch_id", str(self.ticket_list[i].batch_id)),
+                ("user", self.ticket_list[i].user_id),
+                ("batch", self.ticket_list[i].batch_id),
                 ("created_at", self.ticket_list[i].created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
         ]) for i in range(4,6)]
         
