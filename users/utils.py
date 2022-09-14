@@ -57,7 +57,7 @@ class MyUserManager(BaseUserManager):
             False,
             **extra_fields,
         )
-    
+
     def create_superuser(
         self,
         email,
