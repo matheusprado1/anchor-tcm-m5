@@ -154,6 +154,10 @@ paths:
     get:
       operationId: api_batchs_list
       parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
       - name: page
         required: false
         in: query
@@ -515,9 +519,31 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/image/{event_id}/:
+  /api/images/:
+    get:
+      operationId: api_images_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImageList'
+          description: ''
+  /api/images/events/{event_id}/:
     post:
-      operationId: api_image_create
+      operationId: api_images_events_create
       parameters:
       - in: path
         name: event_id
@@ -549,9 +575,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Image'
           description: ''
-  /api/image/{user_id}/:
+  /api/images/users/{user_id}/:
     post:
-      operationId: api_image_create_2
+      operationId: api_images_users_create
       parameters:
       - in: path
         name: user_id
@@ -583,31 +609,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Image'
           description: ''
-  /api/images/:
+  /api/images/view/{image_id}/:
     get:
-      operationId: api_images_list
-      parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      tags:
-      - api
-      security:
-      - tokenAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedImageList'
-          description: ''
-  /api/images/{image_id}/:
-    get:
-      operationId: api_images_retrieve
+      operationId: api_images_view_retrieve
       parameters:
       - in: path
         name: image_id
@@ -629,7 +633,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     put:
-      operationId: api_images_update
+      operationId: api_images_view_update
       parameters:
       - in: path
         name: image_id
@@ -662,7 +666,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     patch:
-      operationId: api_images_partial_update
+      operationId: api_images_view_partial_update
       parameters:
       - in: path
         name: image_id
@@ -694,7 +698,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     delete:
-      operationId: api_images_destroy
+      operationId: api_images_view_destroy
       parameters:
       - in: path
         name: image_id
@@ -1177,6 +1181,12 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
       required:
       - created_at
       - due_date
@@ -1184,6 +1194,8 @@ components:
       - number_batch
       - price
       - quantity
+      - revenue
+      - total_sold_tickets
       - zone
     BatchDetail:
       type: object
@@ -1213,12 +1225,20 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
       required:
       - created_at
       - due_date
       - number_batch
       - price
       - quantity
+      - revenue
+      - total_sold_tickets
       - zone
     Event:
       type: object
@@ -1363,9 +1383,13 @@ components:
           readOnly: true
         photo:
           type: string
+        photo_link:
+          type: string
+          readOnly: true
       required:
       - id
       - photo
+      - photo_link
     ListUser:
       type: object
       properties:
@@ -1622,6 +1646,12 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
     PatchedEventDetail:
       type: object
       properties:
@@ -1668,6 +1698,9 @@ components:
           readOnly: true
         photo:
           type: string
+        photo_link:
+          type: string
+          readOnly: true
     PatchedUser:
       type: object
       properties:
@@ -1727,6 +1760,9 @@ components:
           format: uuid
           readOnly: true
         total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
           type: string
           readOnly: true
         name:
@@ -1838,6 +1874,9 @@ components:
         total_sold_tickets:
           type: string
           readOnly: true
+        revenue:
+          type: string
+          readOnly: true
         name:
           type: string
           maxLength: 50
@@ -1855,6 +1894,7 @@ components:
       - event
       - id
       - name
+      - revenue
       - total_sold_tickets
   securitySchemes:
     tokenAuth:
