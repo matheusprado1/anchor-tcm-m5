@@ -21,7 +21,7 @@ class TestTicketView(APITestCase):
         cls.INVALID_token = "10351033"
 
 
-        event = baker.make("events.Event", full_age=10)
+        event = baker.make("events.Event", classification=10)
         zone = baker.make("zones.Zone", event=event)
 
         batch_1 = baker.make("batchs.Batch", quantity=100, zone=zone, due_date="2100-01-01")
