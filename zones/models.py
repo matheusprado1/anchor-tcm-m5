@@ -21,3 +21,12 @@ class Zone(models.Model):
         self.total_sold_tickets = tst
         self.save()
         return tst
+
+    def get_revenue(self):
+        qsBatchs = Batch.objects.filter(zone=self)
+        tst_price = sum(
+            [len(batch.tickets.all()) * batch.price for batch in qsBatchs]
+        )
+        self.revenue = tst_price
+        self.save()
+        return tst_price
