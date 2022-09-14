@@ -1,25 +1,24 @@
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from .permissions import IsSuperuser, IsUser, IsOwner, IsSuperuserOrAuthenticatedToCreate, IsUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from zones.models import Zone
 from zones.serializers import ZoneSerializer
 
+from .permissions import IsOwner, SuperUserAuth
+
 
 class ZoneView(generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsSuperuserOrAuthenticatedToCreate]
+    permission_classes = [IsOwner | SuperUserAuth]
 
     serializer_class = ZoneSerializer
     queryset = Zone.objects.all()
 
 
 class ZoneDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsSuperuser | IsOwner]
+    permission_classes = [IsOwner | SuperUserAuth]
 
     serializer_class = ZoneSerializer
     queryset = Zone.objects.all()
 
-    lookup_url_kwarg = "zone_id"
+    lookup_url_kwarg = "id"
