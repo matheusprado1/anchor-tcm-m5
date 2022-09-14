@@ -49,6 +49,22 @@ class EventSerializer(serializers.ModelSerializer):
         )
 
 
+    def update(self, instance, validated_data):
+        if validated_data.get("address"):
+            address_poped = validated_data.pop("address")
+
+            verificated_address, _ = Address.objects.get_or_create(
+                **address_poped
+            )
+            instance.address = verificated_address
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+        return instance
+
+
 class EventDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event

@@ -3,31 +3,17 @@ from numbers import Number
 from addresses.models import Address
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+
+from .permissions import IsSuperuserOrIsOwner
 from rest_framework.views import APIView, Request, Response, status
 
 from .mixins import SerializerByMethodMixin
 from .models import Event
-from .permissions import (
-    IsOwner,
-    IsSuperuser,
-    IsSuperuserOrAuthenticatedToCreate,
-    IsUser,
-)
-from .serializers import (
-    EventDetailSerializer,
-    EventDistanceSerializer,
-    EventSerializer,
-)
-
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
-
-    # "distance": 0.0
-    permission_classes = [IsSuperuserOrAuthenticatedToCreate]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsSuperuserOrIsOwner]
 
     serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
     queryset = Event.objects.all()
@@ -36,7 +22,9 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsSuperuser | IsOwner]
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsSuperuserOrIsOwner]
 
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
