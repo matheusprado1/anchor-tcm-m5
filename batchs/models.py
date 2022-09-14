@@ -23,9 +23,6 @@ class Batch(models.Model):
         "zones.Zone", on_delete=models.CASCADE, related_name="batchs"
     )
 
-    def zone_name(self):
-        return self.batch.zone.name
-
     def is_date_valid(self):
         today = dt.date.today()
         duedate = self.due_date

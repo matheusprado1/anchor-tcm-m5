@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from zones.serializers import ZoneSerializer
 
 from .models import Batch
 
@@ -17,12 +16,7 @@ class BatchSerializer(serializers.ModelSerializer):
             "created_at",
             "zone",
         ]
-        read_only_fields = [
-            "created_at",
-            "id",
-            "number_batch"
-        ]
-        depth = 1
+        read_only_fields = ["created_at", "id", "number_batch"]
 
 
 class BatchDetailSerializer(serializers.ModelSerializer):

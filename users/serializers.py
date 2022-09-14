@@ -125,5 +125,3 @@ class ListUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(write_only=True)
     password = serializers.CharField(write_only=True)
-
-

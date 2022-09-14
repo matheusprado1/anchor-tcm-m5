@@ -45,17 +45,3 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
         return super(User, self).save(*args, **kwargs)
-
-
-# class Image(models.Model):
-# id = models.UUIDField(
-# default=uuid.uuid4, unique=True, primary_key=True, editable=False
-# )
-# title = models.CharField(max_length=50)
-# photo = models.ImageField(null=True, blank=True)
-# user = models.OneToOneField(
-# "users.User",
-# on_delete=models.DO_NOTHING,
-# default="",
-# null=True,
-# )
