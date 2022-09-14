@@ -11,10 +11,10 @@ from .views import (
 urlpatterns = [
     path("images/", EventListImageView.as_view()),
     path(
-        "image/<event_id>/", EventImageView.as_view()
+        "images/events/<event_id>/", EventImageView.as_view()
     ),
     path(
-        "image/<user_id>/", UserImageView.as_view()
+        "images/users/<user_id>/", UserImageView.as_view()
     ),
-    path("images/<image_id>/", ImageDetailView.as_view()),
+    path("images/view/<image_id>/", ImageDetailView.as_view()),
 ]
