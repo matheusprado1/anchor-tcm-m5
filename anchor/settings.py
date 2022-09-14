@@ -54,7 +54,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
-    "cloudinary",
     "drf_spectacular",
 ]
 
@@ -222,6 +221,7 @@ cloudinary.config(
 )
 
 django_on_heroku.settings(locals())
+
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True

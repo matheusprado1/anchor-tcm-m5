@@ -10,7 +10,6 @@ class Zone(models.Model):
     total_sold_tickets = models.IntegerField(default=0)
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
     event = models.ForeignKey(
         "events.Event", on_delete=models.CASCADE, related_name="zones"
     )
@@ -21,3 +20,12 @@ class Zone(models.Model):
         self.total_sold_tickets = tst
         self.save()
         return tst
+
+    def get_revenue(self):
+        qsBatchs = Batch.objects.filter(zone=self)
+        tst_price = sum(
+            [len(batch.tickets.all()) * batch.price for batch in qsBatchs]
+        )
+        self.revenue = tst_price
+        self.save()
+        return tst_price
