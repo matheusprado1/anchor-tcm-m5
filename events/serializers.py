@@ -19,7 +19,7 @@ class EventSerializer(serializers.ModelSerializer):
             "description",
             "duration",
             "date",
-            "full_age",
+            "classification",
             "created_at",
             "is_active",
             "address",
