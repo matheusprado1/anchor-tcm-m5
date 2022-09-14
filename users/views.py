@@ -8,11 +8,10 @@ from rest_framework.views import APIView, Response, status
 from .mixins import SerializerByMethodMixin
 from .models import User
 from .permissions import IsUserAdmin, IsUserOwner
-from .serializers import (
-    ListUserSerializer,
-    LoginSerializer,
-    UserSerializer,
-)
+
+from .serializers import ListUserSerializer, LoginSerializer, UserSerializer
+
+
 
 
 class UserFilter(filters.FilterSet):
@@ -45,7 +44,6 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
-
 
 
 class LoginView(APIView):

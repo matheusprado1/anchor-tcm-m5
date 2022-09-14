@@ -46,7 +46,9 @@ class EventSerializer(serializers.ModelSerializer):
 
         validated_address = address_serializer.save()
         return Event.objects.create(
-            **validated_data, address=validated_address, user=self.context['request'].user
+            **validated_data,
+            address=validated_address,
+            user=self.context["request"].user
         )
 
     def update(self, instance, validated_data):

@@ -16,15 +16,10 @@ class BatchSerializer(serializers.ModelSerializer):
             "created_at",
             "zone",
         ]
-        read_only_fields = [
-            "created_at",
-            "id",
-            "number_batch",
-        ]
+        read_only_fields = ["created_at", "id", "number_batch"]
 
 
 class BatchDetailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Batch
         fields = [
