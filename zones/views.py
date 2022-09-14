@@ -5,14 +5,14 @@ from zones.serializers import ZoneSerializer
 
 
 class ZoneView(generics.ListCreateAPIView):
-    permission_classes = [SuperUserAuth, IsOwner]
+    permission_classes = [SuperUserAuth | IsOwner]
 
     serializer_class = ZoneSerializer
     queryset = Zone.objects.all()
 
 
 class ZoneDetailView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [SuperUserAuth, IsOwner]
+    permission_classes = [SuperUserAuth | IsOwner]
 
     serializer_class = ZoneSerializer
     queryset = Zone.objects.all()
