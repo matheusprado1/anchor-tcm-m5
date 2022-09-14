@@ -24,7 +24,6 @@ class UserFilter(filters.FilterSet):
 
 
 class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserAdmin]
 
     queryset = User.objects.all().order_by("created_at")
@@ -35,7 +34,6 @@ class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserOwner]
 
     lookup_url_kwarg = "user_id"
@@ -47,6 +45,8 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
+
+
 
 
 class LoginView(APIView):

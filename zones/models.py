@@ -1,5 +1,6 @@
 import uuid
 
+from batchs.models import Batch
 from django.db import models
 
 
@@ -9,7 +10,8 @@ class Zone(models.Model):
     total_selled_tickets = models.IntegerField()
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
     event = models.ForeignKey(
         "events.Event", on_delete=models.CASCADE, related_name="zones"
     )
+
+

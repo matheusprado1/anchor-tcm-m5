@@ -20,7 +20,7 @@ class Event(models.Model):
     description = models.TextField()
     duration = models.IntegerField()
     date = models.DateTimeField()
-    full_age = models.IntegerField()
+    classification = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
@@ -34,7 +34,7 @@ class Event(models.Model):
     address = models.ForeignKey(
         "addresses.Address",
         on_delete=models.DO_NOTHING,
-        related_name="event",
+        related_name="events",
         default="",
         null=True,
     )

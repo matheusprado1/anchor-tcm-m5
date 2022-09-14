@@ -69,11 +69,12 @@ class UserSerializer(serializers.ModelSerializer):
         return cpf
 
     def create(self, validated_data):
-        validated_address, _ = Address.objects.get_or_create(
-            **validated_data.pop("address")
+        address_serializer = AddressSerializer(
+            data=validated_data.pop("address")
         )
 
         user_mail = User.objects.create_user(
+
             **validated_data, address=validated_address
         )
         from_email = settings.EMAIL_HOST_USER
