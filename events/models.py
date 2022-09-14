@@ -1,6 +1,5 @@
 import uuid
 
-from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -24,7 +23,7 @@ class Event(models.Model):
     address = models.ForeignKey(
         "addresses.Address",
         on_delete=models.CASCADE,
-        related_name="event",
+        related_name="events",
         default="",
         null=True,
     )

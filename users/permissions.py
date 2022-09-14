@@ -16,11 +16,8 @@ class IsUserOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, user: User) -> bool:
 
         return (
-            str(request.user.id) == view.kwargs["user_id"]
+            str(request.user.id) == str(view.kwargs["user_id"])
             and request.user.is_authenticated
             or request.user.is_superuser
             and user.is_superuser is False
-            # se ele nao for super user e for objeto dele
-            # se ele for superuser e for objecto dele
-            # se ele for superuser e o objeto for de um user
         )

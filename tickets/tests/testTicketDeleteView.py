@@ -18,7 +18,7 @@ class TestTicketDeleteView(APITestCase):
         cls.superUser_token = Token.objects.create(user=cls.superUser).key
         cls.INVALID_token = "10351033"
 
-        cls.INVALID_path = "/api/tickets/10351033/"
+        cls.INVALID_path = "/api/tickets/f694d31e-5dd2-4b56-aa4b-b3eeb57a0965/"
 
     @classmethod
     def setUp(cls) -> None:

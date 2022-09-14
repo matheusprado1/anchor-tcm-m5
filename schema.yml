@@ -154,6 +154,10 @@ paths:
     get:
       operationId: api_batchs_list
       parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
       - name: page
         required: false
         in: query
@@ -164,7 +168,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -197,20 +200,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/Batch'
           description: ''
-  /api/batchs/{batch_id}/:
+  /api/batchs/{id}/:
     get:
       operationId: api_batchs_retrieve
       parameters:
       - in: path
-        name: batch_id
+        name: id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -222,9 +225,10 @@ paths:
       operationId: api_batchs_update
       parameters:
       - in: path
-        name: batch_id
+        name: id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -253,9 +257,10 @@ paths:
       operationId: api_batchs_partial_update
       parameters:
       - in: path
-        name: batch_id
+        name: id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -279,6 +284,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/BatchDetail'
           description: ''
+    delete:
+      operationId: api_batchs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/event/distance/:
     get:
       operationId: api_event_distance_list
@@ -366,7 +387,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -408,13 +428,11 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this event.
         required: true
       tags:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -430,7 +448,6 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this event.
         required: true
       tags:
       - api
@@ -463,7 +480,6 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this event.
         required: true
       tags:
       - api
@@ -495,7 +511,6 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this event.
         required: true
       tags:
       - api
@@ -504,9 +519,31 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/image/{event_id}/:
+  /api/images/:
+    get:
+      operationId: api_images_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImageList'
+          description: ''
+  /api/images/events/{event_id}/:
     post:
-      operationId: api_image_create
+      operationId: api_images_events_create
       parameters:
       - in: path
         name: event_id
@@ -538,31 +575,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Image'
           description: ''
-  /api/images/:
-    get:
-      operationId: api_images_list
+  /api/images/users/{user_id}/:
+    post:
+      operationId: api_images_users_create
       parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
+      - in: path
+        name: user_id
         schema:
-          type: integer
+          type: string
+          format: uuid
+        description: A UUID string identifying this image.
+        required: true
       tags:
       - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Image'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Image'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedImageList'
+                $ref: '#/components/schemas/Image'
           description: ''
-  /api/images/{image_id}/:
+  /api/images/view/{image_id}/:
     get:
-      operationId: api_images_retrieve
+      operationId: api_images_view_retrieve
       parameters:
       - in: path
         name: image_id
@@ -584,7 +633,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     put:
-      operationId: api_images_update
+      operationId: api_images_view_update
       parameters:
       - in: path
         name: image_id
@@ -617,7 +666,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     patch:
-      operationId: api_images_partial_update
+      operationId: api_images_view_partial_update
       parameters:
       - in: path
         name: image_id
@@ -649,7 +698,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
     delete:
-      operationId: api_images_destroy
+      operationId: api_images_view_destroy
       parameters:
       - in: path
         name: image_id
@@ -731,7 +780,6 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this ticket.
         required: true
       tags:
       - api
@@ -825,6 +873,7 @@ paths:
         name: user_id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -844,6 +893,7 @@ paths:
         name: user_id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -875,6 +925,7 @@ paths:
         name: user_id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -905,6 +956,7 @@ paths:
         name: user_id
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - api
@@ -913,38 +965,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/users/images/{user_id}/:
-    post:
-      operationId: api_users_images_create
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - api
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Image'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Image'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Image'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Image'
-          description: ''
   /api/zones/:
     get:
       operationId: api_zones_list
@@ -959,7 +979,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1006,7 +1025,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1117,10 +1135,20 @@ components:
         zipcode:
           type: string
           maxLength: 20
+        latitude:
+          type: string
+          readOnly: true
+          nullable: true
+        longitude:
+          type: string
+          readOnly: true
+          nullable: true
       required:
       - city
       - district
       - id
+      - latitude
+      - longitude
       - number
       - street
       - zipcode
@@ -1153,6 +1181,12 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
       required:
       - created_at
       - due_date
@@ -1160,6 +1194,8 @@ components:
       - number_batch
       - price
       - quantity
+      - revenue
+      - total_sold_tickets
       - zone
     BatchDetail:
       type: object
@@ -1189,12 +1225,20 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
       required:
       - created_at
       - due_date
       - number_batch
       - price
       - quantity
+      - revenue
+      - total_sold_tickets
       - zone
     Event:
       type: object
@@ -1229,11 +1273,11 @@ components:
           $ref: '#/components/schemas/Address'
       required:
       - address
+      - classification
       - created_at
       - date
       - description
       - duration
-      - classification
       - id
       - name
     EventDetail:
@@ -1274,11 +1318,11 @@ components:
           format: uuid
           nullable: true
       required:
+      - classification
       - created_at
       - date
       - description
       - duration
-      - classification
       - id
       - name
     EventDistance:
@@ -1322,12 +1366,12 @@ components:
           format: uuid
           nullable: true
       required:
+      - classification
       - created_at
       - date
       - description
       - distance
       - duration
-      - classification
       - id
       - name
     Image:
@@ -1339,9 +1383,13 @@ components:
           readOnly: true
         photo:
           type: string
+        photo_link:
+          type: string
+          readOnly: true
       required:
       - id
       - photo
+      - photo_link
     ListUser:
       type: object
       properties:
@@ -1562,6 +1610,14 @@ components:
         zipcode:
           type: string
           maxLength: 20
+        latitude:
+          type: string
+          readOnly: true
+          nullable: true
+        longitude:
+          type: string
+          readOnly: true
+          nullable: true
     PatchedBatchDetail:
       type: object
       properties:
@@ -1590,6 +1646,12 @@ components:
         zone:
           type: string
           format: uuid
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
     PatchedEventDetail:
       type: object
       properties:
@@ -1636,6 +1698,9 @@ components:
           readOnly: true
         photo:
           type: string
+        photo_link:
+          type: string
+          readOnly: true
     PatchedUser:
       type: object
       properties:
@@ -1694,13 +1759,15 @@ components:
           type: string
           format: uuid
           readOnly: true
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
         name:
           type: string
           maxLength: 50
-        total_selled_tickets:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         is_active:
           type: boolean
         created_at:
@@ -1717,11 +1784,11 @@ components:
           type: string
           format: uuid
           readOnly: true
-        user_id:
+        user:
           type: string
           format: uuid
           readOnly: true
-        batch_id:
+        batch:
           type: string
           format: uuid
         created_at:
@@ -1729,10 +1796,10 @@ components:
           format: date-time
           readOnly: true
       required:
-      - batch_id
+      - batch
       - created_at
       - id
-      - user_id
+      - user
     User:
       type: object
       properties:
@@ -1804,13 +1871,15 @@ components:
           type: string
           format: uuid
           readOnly: true
+        total_sold_tickets:
+          type: string
+          readOnly: true
+        revenue:
+          type: string
+          readOnly: true
         name:
           type: string
           maxLength: 50
-        total_selled_tickets:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         is_active:
           type: boolean
         created_at:
@@ -1825,7 +1894,8 @@ components:
       - event
       - id
       - name
-      - total_selled_tickets
+      - revenue
+      - total_sold_tickets
   securitySchemes:
     tokenAuth:
       type: apiKey

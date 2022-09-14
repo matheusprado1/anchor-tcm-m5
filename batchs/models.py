@@ -9,11 +9,11 @@ from tickets.models import Ticket
 
 class Batch(models.Model):
 
-    id = models.UUIDField(  # mudei nome para id conforme outras tabela.
-        default=uuid.uuid4, primary_key=True
-    )
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     price = models.FloatField()
+    revenue = models.FloatField(default=0)
     quantity = models.IntegerField()
+    total_sold_tickets = models.IntegerField(default=0)
     due_date = models.DateField()
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -35,9 +35,23 @@ class Batch(models.Model):
     def is_enough_tickets(self, num_tickets: int = 1):
         qs = Ticket.objects.filter(batch=self)
         if len(qs) + num_tickets < self.quantity:
+            self.is_active = True
+            self.save()
             return True
         if len(qs) + num_tickets == self.quantity:
             self.is_active = False
-            self.save() 
+            self.save()
             return True
         return False
+
+    def get_sold_tickets(self):
+        tst = len(self.tickets.all())
+        self.total_sold_tickets = tst
+        self.save()
+        return tst
+
+    def get_revenue(self):
+        tst_price = len(self.tickets.all()) * self.price
+        self.revenue = tst_price
+        self.save()
+        return tst_price
