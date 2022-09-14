@@ -13,7 +13,7 @@ def validate_file_size(file):
 
 class Image(models.Model):
   id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-  photo = CloudinaryField(validators=[validate_file_size])
+  photo = CloudinaryField(validators=[validate_file_size], use_filename=True, unique_filename=False)
 
   user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="images", default="", null=True)
   event = models.ForeignKey("events.Event", on_delete=models.CASCADE, related_name="images", default="", null=True)
