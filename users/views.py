@@ -1,11 +1,6 @@
-from email.message import EmailMessage
-from http.client import HTTPResponse
-
-from django.conf import settings
 from django.contrib.auth import authenticate
 from django_filters import rest_framework as filters
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, Response, status
 
@@ -24,7 +19,6 @@ class UserFilter(filters.FilterSet):
 
 
 class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserAdmin]
 
     queryset = User.objects.all().order_by("created_at")
@@ -35,7 +29,6 @@ class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserOwner]
 
     lookup_url_kwarg = "user_id"
@@ -65,5 +58,3 @@ class LoginView(APIView):
             {"detail": "Invalid email or password"},
             status.HTTP_400_BAD_REQUEST,
         )
-
-    

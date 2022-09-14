@@ -127,7 +127,3 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
 
-# class ImageSerializer(serializers.ModelSerializer):
-# class Meta:
-# model = Image
-# fields = ["id", "title", "photo", "user_id"]

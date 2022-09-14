@@ -9,16 +9,14 @@ from addresses.permissions import SuperUserAuth
 from addresses.serializers import AddressSerializer
 
 
-class AddressesView(generics.ListCreateAPIView): # ajustar aqui
-    authentication_classes = [TokenAuthentication]
+class AddressesView(generics.ListCreateAPIView):
     permission_classes = [SuperUserAuth]
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
 class AddressesDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [SuperUserAuth]  # ajustar aqui
+    permission_classes = [SuperUserAuth]
     lookup_url_kwarg = "address_id"
     queryset = Address.objects.all()
     serializer_class = AddressSerializer

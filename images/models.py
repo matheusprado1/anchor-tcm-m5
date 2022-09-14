@@ -31,3 +31,6 @@ class Image(models.Model):
         default="",
         null=True,
     )
+
+    def photo_link(self):
+        return f"https://res.cloudinary.com/anchorteam/image/upload/{self.photo}.jpg"

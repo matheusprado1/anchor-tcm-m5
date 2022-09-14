@@ -11,8 +11,8 @@ class UserModelTest(TestCase):
 
     def test_one_to_many_relationship_is_made_address(self):
 
-        user_1 = baker.make("users.Users", address=self.address)
-        user_2 = baker.make("users.Users", address=self.address)
+        user_1 = baker.make("users.User", address=self.address)
+        user_2 = baker.make("users.User", address=self.address)
 
         self.assertEqual(user_1.address, self.address)
         self.assertEqual(user_2.address, self.address)
