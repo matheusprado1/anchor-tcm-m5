@@ -1,7 +1,6 @@
 import uuid
 
 from django.test import TestCase
-from events.models import Event
 from model_bakery import baker
 from zones.models import Zone
 
@@ -34,3 +33,8 @@ class ZoneModelTest(TestCase):
       True,
       msg="Id is not uuid for product",
     )
+
+
+  def test_zone_fields_constraints(self):
+    max_length_name = Zone._meta.get_field("name").max_length
+    self.assertEqual(max_length_name, 50)
