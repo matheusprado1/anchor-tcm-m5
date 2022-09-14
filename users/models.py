@@ -30,7 +30,13 @@ class User(AbstractUser):
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name", "username", "birthdate"]
+    REQUIRED_FIELDS = [
+        "first_name",
+        "last_name",
+        "username",
+        "birthdate",
+        "is_staff",
+    ]
     objects = MyUserManager()
 
     def age(self):
