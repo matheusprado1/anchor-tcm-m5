@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import (
     EventImageView,
     EventListImageView,
@@ -16,3 +17,4 @@ urlpatterns = [
     ),
     path("images/<image_id>/", UserImageDetailView.as_view()),
 ]
+

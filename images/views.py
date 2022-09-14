@@ -7,6 +7,7 @@ from .models import Image
 from .serializers import ImageSerializer
 
 
+
 class EventImageView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -15,6 +16,7 @@ class EventImageView(generics.CreateAPIView):
     serializer_class = ImageSerializer
 
     lookup_url_kwarg = "event_id"
+
 
 
 class EventListImageView(generics.ListAPIView):
@@ -45,6 +47,7 @@ class UserImageView(generics.CreateAPIView):
     lookup_url_kwarg = "user_id"
 
 
+
 class UserListImageView(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -53,7 +56,9 @@ class UserListImageView(generics.ListAPIView):
     serializer_class = ImageSerializer
 
 
+
 class UserImageDetailView(generics.RetrieveUpdateDestroyAPIView):
+
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
