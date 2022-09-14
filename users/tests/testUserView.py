@@ -1,4 +1,3 @@
-from uuid import UUID
 from datetime import datetime
 from model_bakery import baker
 from collections import OrderedDict
