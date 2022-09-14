@@ -7,7 +7,6 @@ from batchs.serializers import BatchDetailSerializer, BatchSerializer
 
 
 class BatchsView(generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
     serializer_class = BatchSerializer
@@ -20,7 +19,6 @@ class BatchsView(generics.ListCreateAPIView):
 
 
 class UpdateBatchsView(generics.RetrieveUpdateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Batch.objects.all()
     serializer_class = BatchDetailSerializer

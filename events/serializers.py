@@ -38,9 +38,12 @@ class EventSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        validated_address, _ = Address.objects.get_or_create(
-            **validated_data.pop("address")
+        address_serializer = AddressSerializer(
+            data=validated_data.pop("address")
         )
+        address_serializer.is_valid(raise_exception=True)
+
+        validated_address = address_serializer.save()
 
         return Event.objects.create(
             **validated_data, address=validated_address
@@ -62,16 +65,17 @@ class EventDistanceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_distance(self, obj):
-        geolocator = Nominatim(user_agent="address")
-        user_address = self.context["request"].user.address.get_full_address()
-        event_address = obj.address.get_full_address()
-        user_location = geolocator.geocode(user_address)
-        event_location = geolocator.geocode(event_address)
+        user_address = self.context["request"].user.address
 
         try:
-            return distance.distance(
-                (user_location.latitude, user_location.longitude),
-                (event_location.latitude, event_location.longitude),
-            ).km
+            if obj.address.latitude is None or obj.address.latitude is None:
+                raise AttributeError
+            return round(
+                distance.distance(
+                    (user_address.latitude, user_address.longitude),
+                    (obj.address.latitude, obj.address.longitude),
+                ).km,
+                2,
+            )
         except AttributeError:
-            return "User or event invalid address for"
+            return "User or event invalid address for distance"
