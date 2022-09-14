@@ -9,7 +9,7 @@ from tickets.models import Ticket
 
 class Batch(models.Model):
 
-    id = models.UUIDField(  # mudei nome para id conforme outras tabela.
+    id = models.UUIDField(  
         default=uuid.uuid4, primary_key=True
     )
     price = models.FloatField()
@@ -35,9 +35,11 @@ class Batch(models.Model):
     def is_enough_tickets(self, num_tickets: int = 1):
         qs = Ticket.objects.filter(batch=self)
         if len(qs) + num_tickets < self.quantity:
+            self.is_active = True
+            self.save()
             return True
         if len(qs) + num_tickets == self.quantity:
             self.is_active = False
-            self.save() 
+            self.save()
             return True
         return False
