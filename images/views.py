@@ -31,3 +31,5 @@ class EventImageDetailView(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = ImageSerializer
 
   lookup_url_kwarg = "image_id"
+
+
