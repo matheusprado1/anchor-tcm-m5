@@ -44,9 +44,8 @@ class EventSerializer(serializers.ModelSerializer):
         address_serializer.is_valid(raise_exception=True)
 
         validated_address = address_serializer.save()
-
         return Event.objects.create(
-            **validated_data, address=validated_address
+            **validated_data, address=validated_address, user=self.context['request'].user
         )
 
 
