@@ -6,7 +6,7 @@ from events.models import Event
 from model_bakery import baker
 
 
-class ProductModelTest(TestCase):
+class AddressModelTest(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
 
@@ -18,7 +18,7 @@ class ProductModelTest(TestCase):
             description="Vai ser um evento muito divertido",
             duration=555,
             date="1999-09-08 13:56:51.715538+00",
-            full_age=16,
+            classification=16,
             address=cls.address_2,
         )
 
