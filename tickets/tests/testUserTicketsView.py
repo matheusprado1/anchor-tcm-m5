@@ -19,7 +19,7 @@ class TestUserTicketsView(APITestCase):
         cls.superUser_token = Token.objects.create(user=cls.superUser).key
         cls.INVALID_token = "10351033"
 
-        cls.ticket_list = [baker.make("tickets.Ticket", user_id=cls.ownerUser.id) for i in range(6)]
+        cls.ticket_list = baker.make("tickets.Ticket", _quantity=6, user_id=cls.ownerUser.id)
         # create an aleatory ticket to check if is it filtering correctly
         baker.make("tickets.Ticket")
 
@@ -69,8 +69,6 @@ class TestUserTicketsView(APITestCase):
             ("results", results)
         ])
         
-        import ipdb
-        # ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, expected_response)
 

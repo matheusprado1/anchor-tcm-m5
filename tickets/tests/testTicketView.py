@@ -1,3 +1,4 @@
+from uuid import UUID
 from model_bakery import baker
 from collections import OrderedDict
 
@@ -10,22 +11,26 @@ class TestTicketView(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
 
-        cls.commonUser = baker.make("users.User", is_superuser=False)
-        cls.superUser = baker.make("users.User", is_superuser=True)
+        cls.commonUser = baker.make("users.User", is_superuser=False, birthdate="1900-01-01")
+        cls.superUser = baker.make("users.User", is_superuser=True, birthdate="1900-01-01")
 
         cls.commonUser_token = Token.objects.create(user=cls.commonUser).key
         cls.superUser_token = Token.objects.create(user=cls.superUser).key
         cls.INVALID_token = "10351033"
 
-        cls.batch_1 = baker.make("batchs.Batch", quantity=100)
-        cls.batch_2 = baker.make("batchs.Batch", quantity=100)
+
+        event = baker.make("events.Event", full_age=10)
+        zone = baker.make("zones.Zone", event=event)
+
+        cls.batch_1 = baker.make("batchs.Batch", quantity=100, zone=zone, due_date="2100-01-01")
+        cls.batch_2 = baker.make("batchs.Batch", quantity=100, zone=zone, due_date="2100-01-01")
 
         cls.ticket_data_1 = { "batch": str(cls.batch_1.id) }
 
         cls.UNEXISTING_batch_for_ticket_data = { "batch": "d3360bbe-e1c5-411f-9491-ddad5f700055" }
         cls.INVALID_type_for_ticket_data = { "batch": "10351033" }
 
-        cls.ticket_list = [baker.make("tickets.Ticket", batch_id=cls.batch_2.id) for i in range(6)]
+        cls.ticket_list = baker.make("tickets.Ticket", _quantity=6, batch_id=cls.batch_2.id)
 
         cls.path = "/api/tickets/"
     
@@ -37,12 +42,10 @@ class TestTicketView(APITestCase):
         expected_response = {
             "id": response.data["id"], 
             "user": self.commonUser.id, 
-            "batch": self.ticket_data_1["batch_id"], 
+            "batch": UUID(self.ticket_data_1["batch"]), 
             "created_at": response.data["created_at"]
         }
 
-        # import ipdb
-        # ipdb.set_trace()
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, expected_response)
@@ -51,7 +54,7 @@ class TestTicketView(APITestCase):
 
         for i in range(22):
 
-            user = baker.make("users.User")
+            user = baker.make("users.User", birthdate="1900-01-01")
             user_token = Token.objects.create(user=user).key
 
             self.client.credentials(HTTP_AUTHORIZATION=f"Token {user_token}")
@@ -60,7 +63,7 @@ class TestTicketView(APITestCase):
             expected_response = {
                 "id": response.data["id"], 
                 "user": user.id, 
-                "batch": self.ticket_data_1["batch_id"], 
+                "batch": UUID(self.ticket_data_1["batch"]), 
                 "created_at": response.data["created_at"]
             }
 
