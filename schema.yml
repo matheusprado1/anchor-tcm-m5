@@ -975,7 +975,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1022,7 +1021,6 @@ paths:
       - api
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1734,10 +1732,6 @@ components:
         name:
           type: string
           maxLength: 50
-        total_selled_tickets:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         is_active:
           type: boolean
         created_at:
@@ -1847,10 +1841,6 @@ components:
         name:
           type: string
           maxLength: 50
-        total_selled_tickets:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         is_active:
           type: boolean
         created_at:
@@ -1865,7 +1855,6 @@ components:
       - event
       - id
       - name
-      - total_selled_tickets
       - total_sold_tickets
   securitySchemes:
     tokenAuth:

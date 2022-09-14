@@ -1,7 +1,5 @@
 from django_filters import rest_framework as filters
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from batchs.models import Batch
 from batchs.serializers import BatchDetailSerializer, BatchSerializer

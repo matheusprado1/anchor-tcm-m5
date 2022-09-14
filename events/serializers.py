@@ -1,7 +1,8 @@
+from geopy import distance
+
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
-from geopy import distance
-from geopy.geocoders import Nominatim
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 

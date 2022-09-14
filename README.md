@@ -1,95 +1,147 @@
-# Anchor
+## ⚓ Anchor API
 
-Hi!! we are anchor, your API for event management.
 
-YOUR TIME IS WORTH MORE WITH OUR EVENTS
+## Description
 
-![img](https://drive.google.com/file/d/1DV8Mtvu9FenNTjJ9ECDbpiaIdZOLnNqx/view?usp=sharing)
+Project to facilitate event users and event creators to manage events, from the place where the event took place to the purchase of a ticket.
 
-## Getting Started
+ANCHOR YOUR TIME IS WORTH MORE WITH OUR EVENTS!
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Main features
 
-```
-git@github.com:matheusprado1/anchor-tcm-m5.git
-```
+* Separated dev and production settings
 
-### Prerequisites
+* Example app with custom user model
 
-What things you need to install the software and how to install them
+* Bootstrap static files included
 
-```
- pip install -r requirements.txt
-```
+* User registration and logging in as demo
 
-### Installing
+* Heroku for easy deployments
 
-A step by step series of examples that tell you how to get a development env running
+* Separated requirements files
 
-Say what the step will be
+* SQLite by default if no env variable is set
 
-```
-Give the example
-```
+## 💻 Prerequisites
 
-And repeat
+Before starting, make sure you've met the following requirements:
 
-```
-until finished
-```
+* You have installed the latest version of `<python>` and `<pip>`
 
-End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+## 🚀 Install Anchor-API
 
-Explain how to run the automated tests for this system
+To install Anchor, follow these steps:
 
-### Break down into end to end tests
+The first thing to do is to clone the repository:
 
-Explain what these tests test and why
-
-```
-Give an example
+```sh
+$ git clone https://github.com/matheusprado1/anchor-tcm-m5.git
+$ cd anchor-tcm-m5
 ```
 
-### And coding style tests
+Create a virtual environment to install dependencies in and activate it:
 
-Explain what these tests test and why
-
+```sh
+$ virtualenv2 --no-site-packages env
+$ source env/bin/activate
 ```
-Give an example
+
+Then install the dependencies:
+
+```sh
+(env)$ pip install -r requirements.txt
 ```
+Note the `(env)` in front of the prompt. This indicates that this terminal
+session operates in a virtual environment set up by `virtualenv2`.
 
-## Deployment
+Once `pip` has finished downloading the dependencies:
+```sh
+(env)$ cd project
+(env)$ python manage.py runserver
+```
+And navigate to `http://127.0.0.1:8000/api/`.
 
-Add additional notes about how to deploy this on a live system
+# Website with documentation with api swagger
 
-## Built With
+https://anchor-tcm-m5.herokuapp.com/schema/swagger-ui/
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
+## 📫 Contributing to Anchor-API
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+To contribute to AnchorApi, follow these steps:
 
-## Versioning
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make your changes and commit them: `git commit -m '<commit_message>'`
+4. Push to the original branch: `git push origin <branch_name> / <local>`
+5. Create the pull request.
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Alternatively, see the GitHub documentation at [How to create a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-## Authors
+## Libraries used in the api
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+[Django-rest-framework][https://www.django-rest-framework.org/]
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+[Django-filter][https://django-filter.readthedocs.io/]
 
-## License
+[Cloudinary][https://cloudinary.com/]
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+[Geopy][https://geopy.readthedocs.io/]
 
-## Acknowledgments
+## Deploy Website
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+https://anchor-tcm-m5.herokuapp.com/
+
+## 🤝 Collaborators
+
+We thank the following people who contributed to this project:
+
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/amandaolits" width="100px;" alt="">
+          <b>Amanda Oliveira</b>
+      </a>
+      </br>
+          <b>Dev</b>
+    </td>
+    <td align="center">
+        <a href="https://github.com/caiogiffoni" width="100px;" alt="">
+          <b>Caio Giffoni</b>
+      </a>
+      </br>
+          <b>Product Owner</b>
+    </td>
+   <td align="center">
+        <a href="https://github.com/jaquemalinoski" width="100px;" alt="">
+          <b>Jaqueline Malinoski</b>
+      </a>
+      </br>
+          <b>Dev</b>
+    </td>
+    <td align="center">
+        <a href="https://github.com/matheusprado1" width="100px;" alt="">
+          <b>Matheus Prado</b>
+      </a>
+      </br>
+          <b>Tech Lead</b>
+    </td>
+    <td align="center">
+        <a href="https://github.com/paulo-david " width="100px;" alt="">
+          <b>Paulo David</b>
+      </a>
+        </br>
+          <b>Dev</b>
+    </td>
+    <td align="center">
+        <a href="https://github.com/talitta-nunes" width="100px;" alt="">
+          <b>Talitta Nunes</b>
+      </a>
+      </br>
+          <b>Scrum Master</b>
+    </td>
+  </tr>
+</table>
+

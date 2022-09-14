@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from django_filters import rest_framework as filters
+
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, Response, status
@@ -7,7 +8,10 @@ from rest_framework.views import APIView, Response, status
 from .mixins import SerializerByMethodMixin
 from .models import User
 from .permissions import IsUserAdmin, IsUserOwner
+
 from .serializers import ListUserSerializer, LoginSerializer, UserSerializer
+
+
 
 
 class UserFilter(filters.FilterSet):

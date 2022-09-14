@@ -35,8 +35,15 @@ class UserImageView(generics.CreateAPIView):
     lookup_url_kwarg = "user_id"
 
 
-class UserImageDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserListImageView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+
+
+class ImageDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
