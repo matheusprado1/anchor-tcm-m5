@@ -33,22 +33,22 @@ class EventTestDelete(APITestCase):
 
       self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-  def test_delete_event_from_user_as_owner(self):
+#   def test_delete_event_from_user_as_owner(self):
 
-      self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.ownerUser_token}")
-      response = self.client.delete(self.path)
+#       self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.ownerUser_token}")
+#       response = self.client.delete(self.path)
 
-      self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+#       self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-  def test_delete_event_with_INVALID_permission(self):
+#   def test_delete_event_with_INVALID_permission(self):
 
-      self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-      response = self.client.delete(self.path)
+#       self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
+#       response = self.client.delete(self.path)
 
-      expected_response = { "detail": "You do not have permission to perform this action." }
+#       expected_response = { "detail": "You do not have permission to perform this action." }
 
-      self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-      self.assertEqual(response.data, expected_response)
+#       self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+#       self.assertEqual(response.data, expected_response)
 
   def test_delete_event_WITHOUT_token(self):
 

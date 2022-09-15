@@ -20,7 +20,7 @@ class EventModelTest(TestCase):
         )
 
     def test_name_max_length(self):
-        event = Event.objects.get(id=1)
+        event = Event.objects.get(id=self.event.id)
         max_length = event._meta.get_field('name').max_length
         self.assertEquals(max_length, 127)
 

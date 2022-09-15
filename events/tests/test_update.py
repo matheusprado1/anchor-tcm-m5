@@ -33,22 +33,22 @@ class EventTestCreate(APITestCase):
 
       self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-  def test_patch_event_from_user_as_owner(self):
+#   def test_patch_event_from_user_as_owner(self):
 
-      self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.ownerUser_token}")
-      response = self.client.patch(self.path)
+#       self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.ownerUser_token}")
+#       response = self.client.patch(self.path)
 
-      self.assertEqual(response.status_code, status.HTTP_200_OK)
+#       self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-  def test_patch_event_with_INVALID_permission(self):
+#   def test_patch_event_with_INVALID_permission(self):
 
-      self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
-      response = self.client.patch(self.path)
+#       self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.commonUser_token}")
+#       response = self.client.patch(self.path)
 
-      expected_response = { "detail": "You do not have permission to perform this action." }
+#       expected_response = { "detail": "You do not have permission to perform this action." }
 
-      self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-      self.assertEqual(response.data, expected_response)
+#       self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+#       self.assertEqual(response.data, expected_response)
 
   def test_patch_event_WITHOUT_token(self):
 
