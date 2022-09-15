@@ -17,8 +17,7 @@ class SuperUserAuth(BasePermission):
 
 
 class IsOwner(BasePermission):
-    def has_permission(self, request, view):
+     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-        zone = get_object_or_404(Zone, id=request.data["zone"])
-        return zone.event.user == request.user
+        return obj.zone.event.user == request.user
