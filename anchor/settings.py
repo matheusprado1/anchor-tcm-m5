@@ -36,7 +36,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["anchor-tcm-m5.herokuapp.com", "localhost"]
 
 
 # Application definition
