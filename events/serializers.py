@@ -1,8 +1,6 @@
-from geopy import distance
-
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
-
+from geopy import distance
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -85,7 +83,7 @@ class EventDistanceSerializer(serializers.ModelSerializer):
         user_address = self.context["request"].user.address
 
         try:
-            if obj.address.latitude is None or obj.address.latitude is None:
+            if obj.address.latitude is None or user_address.latitude is None:
                 raise AttributeError
             return round(
                 distance.distance(
