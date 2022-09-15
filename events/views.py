@@ -1,5 +1,4 @@
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from events.serializers import EventDetailSerializer, EventDistanceSerializer, EventSerializer
@@ -11,7 +10,6 @@ from .models import Event
 
 
 class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsSuperuserOrIsOwner]
 
     serializer_map = {"GET": EventSerializer, "POST": EventSerializer}
@@ -21,8 +19,6 @@ class ListCreateEventView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
-
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsSuperuserOrIsOwner]
 
     queryset = Event.objects.all()

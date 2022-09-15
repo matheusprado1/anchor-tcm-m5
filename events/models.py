@@ -22,7 +22,7 @@ class Event(models.Model):
     )
     address = models.ForeignKey(
         "addresses.Address",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name="events",
         default="",
         null=True,
