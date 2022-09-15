@@ -1,14 +1,17 @@
 from django.contrib.auth import authenticate
 from django_filters import rest_framework as filters
+
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, Response, status
 
 from .mixins import SerializerByMethodMixin
 from .models import User
 from .permissions import IsUserAdmin, IsUserOwner
+
 from .serializers import ListUserSerializer, LoginSerializer, UserSerializer
+
+
 
 
 class UserFilter(filters.FilterSet):
@@ -20,7 +23,6 @@ class UserFilter(filters.FilterSet):
 
 
 class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserAdmin]
 
     queryset = User.objects.all().order_by("created_at")
@@ -31,7 +33,6 @@ class UserView(SerializerByMethodMixin, generics.ListCreateAPIView):
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsUserOwner]
 
     lookup_url_kwarg = "user_id"
@@ -39,10 +40,15 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
+
 
 class LoginView(APIView):
     def post(self, request):
-        
+
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = authenticate(

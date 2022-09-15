@@ -3,13 +3,10 @@ from tickets.models import Ticket
 
 
 class TicketSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Ticket
-        fields = ["id", "user_id", "batch_id", "created_at"]
-
-
-    def create(self, validated_data):
-
-        user = self.context["request"].user
-        return Ticket.objects.create(**validated_data, user=user)
+        fields = ["id", "user", "batch", "created_at"]
+        extra_kwargs = {
+            # "qnt_tickets": {"write_only": True},
+            "user": {"read_only": True},
+        }
